@@ -2,6 +2,7 @@ import graphics as gf
 import random as rd
 from datetime import datetime
 import os
+from functions import *
 
 fundo_tela1 = gf.Image(gf.Point(550,400),"Login.png")
 fundo_tela2 = gf.Image(gf.Point(550,400),"Cadastro.png")
@@ -113,247 +114,6 @@ paciente_desejado_entry.setFill(gf.color_rgb(255,255,255))
 
 gf.update(10)
 
-def get_login(): #pega a informação de login
-    login = caixa_login.getText()
-    return login
-
-def get_senha(): #pega a senha
-    senha = caixa_senha.getText()
-    return senha
-
-def get_nome():
-    nome = caixa_nome.getText()
-    return nome
-
-def get_cpf():
-    cpf = caixa_cpf.getText()
-    return cpf
-
-def exit(): #esc para sair do programa
-    tecla = janela.checkKey()
-    if tecla == "Escape":
-        janela.close()
-
-def fazer_login_medico():
-    dados_usuario_format = login + ';' + senha
-    dados_usuario_format = dados_usuario_format.split(';')
-    with open("dados_login_medico.csv", "r") as arquivo:
-      for linha in arquivo:
-        linha = linha[0:-1].split(';')
-
-        if dados_usuario_format[0] == linha[1] and dados_usuario_format[1] == linha[2]:
-          verificacao_login_medico = True
-          break
-        else:
-          verificacao_login_medico = False
-      arquivo.close()
-      return verificacao_login_medico
-
-def fazer_login(): #verifica se as informações que o usuário digitou batem com o data base
-    dados_usuario_format = login + ';' + senha
-    dados_usuario_format = dados_usuario_format.split(';')
-    with open("dados_login.csv", "r") as arquivo:
-      for linha in arquivo:
-        linha = linha[0:-1].split(';')
-
-        if dados_usuario_format[0] == linha[1] and dados_usuario_format[1] == linha[2]:
-          verificacao_login = True
-          break
-        else:
-          verificacao_login = False
-      arquivo.close()
-      return verificacao_login
-
-def valida_email(): #valida o email
-    if ("@" in login) and (".com" in login ):
-        return True
-    else:
-        return False
-
-def fazer_cadastro(): #faz o cadastro do usuário, gerando um id único
-    #testa se o id já existe:
-    id_valido = False
-    while id_valido == False:
-        with open("dados_login.csv","r") as arquivo:
-            id_gerado = gera_id()
-            for linha in arquivo:
-                lista = linha[0:-1].split(';') #transforma a linha em uma lista removendo o '\n'
-                if id_gerado != lista[0]: #compara o id_gerado com a posição[0] da lista
-                    id_valido = True
-                else:
-                    id_valido = False
-            arquivo.close()
-
-    #testa se o cadastro é válido
-    dados_usuario = id_gerado + ';' + login + ';' + senha + ";" + nome + ';' + cpf + '\n'
-    dados_usuario_format = id_gerado + ';' + login + ';' + senha
-    dados_usuario_format = dados_usuario_format.split(';')
-    if (login!='') and (senha!=''):
-        valido = valida_email()
-        if valido == True:
-            with open("dados_login.csv","r") as arquivo1:
-                for linha in arquivo1:
-                    split_linha = linha[0:-1].split(';')
-
-                    if dados_usuario_format[1] == split_linha[1]:
-                        verificacao_cadastro = False
-                        break
-                    else:
-                        verificacao_cadastro = True
-                arquivo1.close()
-                if verificacao_cadastro == True:
-                    with open('dados_login.csv','a') as arquivo2:
-                            arquivo2.write(dados_usuario)
-                            arquivo2.close()
-        else:
-            verificacao_cadastro = False
-    else:
-        verificacao_cadastro = False
-    return verificacao_cadastro
-
-def fazer_cadastro_medico():
-    #testa se o id já existe:
-    id_valido = False
-    while id_valido == False:
-        with open("dados_login_medico.csv","r") as arquivo:
-            id_gerado = gera_id()
-            for linha in arquivo:
-                lista = linha[0:-1].split(';') #transforma a linha em uma lista removendo o '\n'
-                if id_gerado != lista[0]: #compara o id_gerado com a posição[0] da lista
-                    id_valido = True
-                else:
-                    id_valido = False
-            arquivo.close()
-
-    #testa se o cadastro é válido
-    dados_usuario = id_gerado + ';' + login + ';' + senha + ";" + nome + ';' + cpf + '\n'
-    dados_usuario_format = id_gerado + ';' + login + ';' + senha
-    dados_usuario_format = dados_usuario_format.split(';')
-    if (login!='') and (senha!=''):
-        valido = valida_email()
-        if valido == True:
-            with open("dados_login_medico.csv","r") as arquivo1:
-                for linha in arquivo1:
-                    split_linha = linha[0:-1].split(';')
-
-                    if dados_usuario_format[1] == split_linha[1]:
-                        verificacao_cadastro_medico = False
-                        break
-                    else:
-                        verificacao_cadastro_medico = True
-                arquivo1.close()
-                if verificacao_cadastro_medico == True:
-                    with open('dados_login_medico.csv','a') as arquivo2:
-                            arquivo2.write(dados_usuario)
-                            arquivo2.close()
-        else:
-            verificacao_cadastro_medico = False
-    else:
-        verificacao_cadastro_medico = False
-    return verificacao_cadastro_medico
-
-def exames_draw(): #desenha os obejtos da aba de exames
-    hemacias_entry.draw(janela)
-    hemoglobina_entry.draw(janela)
-    hematocrito_entry.draw(janela)
-    vcm_entry.draw(janela)
-    hcm_entry.draw(janela)
-    chcm_entry.draw(janela)
-    rdw_entry.draw(janela)
-    leucocitos_entry.draw(janela)
-    basofilos_entry.draw(janela)
-    eosinofilos_entry.draw(janela)
-    mielocitos_entry.draw(janela)
-    metamielocitos_entry.draw(janela)
-    bastoes_entry.draw(janela)
-    segmentados_entry.draw(janela)
-    linfocitos_entry.draw(janela)
-    linfocitos_atipicos_entry.draw(janela)
-    monocitos_entry.draw(janela)
-    plaquetas_entry.draw(janela)
-    vpm_entry.draw(janela)
-    plaquetocrito_entry.draw(janela)
-    pdw_entry.draw(janela)
-    hdl_entry.draw(janela)
-    ldl_entry.draw(janela)
-    data_entry.draw(janela)
-
-def exames_undraw(): #apaga os objetos e o background da aba de exames
-    hemacias_entry.undraw()
-    hemoglobina_entry.undraw()
-    hematocrito_entry.undraw()
-    vcm_entry.undraw()
-    hcm_entry.undraw()
-    chcm_entry.undraw()
-    rdw_entry.undraw()
-    leucocitos_entry.undraw()
-    basofilos_entry.undraw()
-    eosinofilos_entry.undraw()
-    mielocitos_entry.undraw()
-    metamielocitos_entry.undraw()
-    bastoes_entry.undraw()
-    segmentados_entry.undraw()
-    linfocitos_entry.undraw()
-    linfocitos_atipicos_entry.undraw()
-    monocitos_entry.undraw()
-    plaquetas_entry.undraw()
-    vpm_entry.undraw()
-    plaquetocrito_entry.undraw()
-    pdw_entry.undraw()
-    hdl_entry.undraw()
-    ldl_entry.undraw()
-    data_entry.undraw()
-    fundo_tela3.undraw()
-
-def get_exames(): #pega os dados dos exames digitados
-    hemacias_get = hemacias_entry.getText()
-    hemoglobina_get = hemoglobina_entry.getText()
-    hematocrito_get = hematocrito_entry.getText()
-    vcm_get = vcm_entry.getText()
-    hcm_get = hcm_entry.getText()
-    chcm_get = chcm_entry.getText()
-    rdw_get = rdw_entry.getText()
-    leucocitos_get = leucocitos_entry.getText()
-    basofilos_get = basofilos_entry.getText()
-    eosinofilos_get = eosinofilos_entry.getText()
-    mielocitos_get = mielocitos_entry.getText()
-    metamielocitos_get = metamielocitos_entry.getText()
-    bastoes_get = bastoes_entry.getText()
-    segmentados_get = segmentados_entry.getText()
-    linfocitos_get = linfocitos_entry.getText()
-    linfocitos_atipicos_get = linfocitos_atipicos_entry.getText()
-    monocitos_get = monocitos_entry.getText()
-    vpm_get = vpm_entry.getText()
-    plaquetocrito_get = plaquetocrito_entry.getText()
-    pdw_get = pdw_entry.getText()
-    data_get = data_entry.getText()
-    ldl_get = ldl_entry.getText()
-    hdl_get = hdl_entry.getText()
-
-    texto_exames = hemacias_get+';'+hemoglobina_get+';'+hematocrito_get+';'+vcm_get+';'+hcm_get+';'+chcm_get+';'+rdw_get+';'+leucocitos_get+';'+basofilos_get+';'+eosinofilos_get+';'+mielocitos_get+';'+metamielocitos_get+';'+bastoes_get+';'+segmentados_get+';'+linfocitos_get+';'+linfocitos_atipicos_get+';'+monocitos_get+';'+vpm_get+';'+plaquetocrito_get+';'+pdw_get+';'+ldl_get+';'+hdl_get+';'+data_get
-    return texto_exames
-
-def apagar_tudo(): #apaga os obejtos do primeiro evento
-    caixa_login.undraw()
-    caixa_senha.undraw()
-    fundo_tela1.undraw()
-
-def apagar_tudo_cadastro():
-    caixa_login.undraw()
-    caixa_senha.undraw()
-    fundo_tela1.undraw()
-    caixa_nome.undraw()
-    caixa_cpf.undraw()
-    fundo_tela5.undraw()
-
-def gera_id(): #gera um id aleatório de 5 dígitos
-    id = ''
-
-    for i in range(5):
-        num = rd.randint(0,9)
-        id = id + str(num)
-    return id
-
 eventos = ["1","2",'3','4','5','6'] #eventos para direcionar o programa
 
 aviso_incorreto = False
@@ -363,14 +123,13 @@ prosseguir = eventos[0]
 while True:
     if prosseguir == eventos[0]:
         click = janela.getMouse()
-        rodar = exit()
-        login = get_login()
-        senha = get_senha()
+        login = get_login(caixa_login)
+        senha = get_senha(caixa_senha)
 
         #LOGIN
         if (click.getX() >= 449 and click.getX() <= 646) and (click.getY() >= 489 and click.getY() <= 528):
             #verifica se o login pode ser efetuado
-            verificacao_login = fazer_login()
+            verificacao_login = fazer_login(login,senha)
             #Verifica e remove se ja existe um aviso na tela
             if aviso_existente == True:
                 aviso_usuario_existente.undraw()
@@ -379,8 +138,8 @@ while True:
 
             #testa se o login esta certo
             if verificacao_login == True:
-                login_atual = get_login()  #pega o e-mail do usuário atual
-                apagar_tudo()
+                login_atual = get_login(caixa_login)  #pega o e-mail do usuário atual
+                apagar_tudo(caixa_login,caixa_senha,fundo_tela1)
                 prosseguir = eventos[1]
             else:
                 aviso_usuario_incorreto = gf.Text(gf.Point(550,465),"E-mail ou senha inválidos.")
@@ -396,7 +155,7 @@ while True:
 
         #LOGIN MÉDICO
         if (click.getX() >= 449 and click.getX() <= 647) and (click.getY() >= 613 and click.getY() <= 690):
-            verificacao_login_medico = fazer_login_medico()
+            verificacao_login_medico = fazer_login_medico(login,senha)
 
             if aviso_existente == True:
                 aviso_usuario_existente.undraw()
@@ -404,8 +163,8 @@ while True:
                 aviso_usuario_incorreto.undraw()
 
             if verificacao_login_medico == True:
-                login_atual = get_login()   #pega o e-mail do usuário atual
-                apagar_tudo()
+                login_atual = get_login(caixa_login)   #pega o e-mail do usuário atual
+                apagar_tudo(caixa_login,caixa_senha,fundo_tela1)
                 prosseguir = eventos[2]
             else:
                 aviso_usuario_existente = gf.Text(gf.Point(550,465),"Email não cadastrado ou inválido")
@@ -417,17 +176,16 @@ while True:
 
     informacoes_desenhadas = False
     while prosseguir == eventos[1]:
-        rodar = exit()
         if informacoes_desenhadas == False:
             fundo_tela3.draw(janela)
-            exames_draw()                               #objetos e caixas de entrada são desenhados
+            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)                               #objetos e caixas de entrada são desenhados
 
         informacoes_desenhadas = True #verifica se os objetos forma desenhados e evita o crash
         click = janela.getMouse()
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739):     #verifica as coordenadas e pega os dados dos Entrys
             data_atual = data_entry.getText()
-            saida = get_exames()
+            saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
             with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
                 for linha in arquivo:
                     lista = linha.split(';')
@@ -451,7 +209,7 @@ while True:
             
     verificador_anticrash = False
     while prosseguir == eventos[2]:    #seleção de pacientes do médico
-        exames_undraw()
+        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
         if verificador_anticrash == False:    #evita crash e permite o loop do programa
             fundo_tela4.draw(janela)
             paciente_desejado_entry.draw(janela)
@@ -459,7 +217,6 @@ while True:
             '''text_botao_gerar.draw(janela)'''
 
         verificador_anticrash = True
-        rodar = exit()
         click = janela.getMouse()
 
         if (click.getX() >= 388 and click.getX() <= 713) and (click.getY() >= 587 and click.getY() <= 661):
@@ -524,10 +281,10 @@ while True:
         verificador_anticrash = True
 
         click = janela.getMouse()
-        login = get_login()
-        senha = get_senha()
-        nome = get_nome()
-        cpf = get_cpf()
+        login = get_login(caixa_login)
+        senha = get_senha(caixa_senha)
+        nome = get_nome(caixa_nome)
+        cpf = get_cpf(caixa_cpf)
 
 
         if (click.getX() >= 452 and click.getX() <= 648) and (click.getY() >= 586 and click.getY() <= 624):  #cadastro como paciente
@@ -540,7 +297,7 @@ while True:
                 aviso_usuario_incorreto.undraw()
 
             if verificacao_cadastro == True:
-                login_atual = get_login()   #pega o e-mail do usuário atual
+                login_atual = get_login(caixa_login)   #pega o e-mail do usuário atual
                 apagar_tudo_cadastro()
                 prosseguir = eventos[1]
             else:
@@ -559,7 +316,7 @@ while True:
                 aviso_usuario_incorreto.undraw()
 
             if verificacao_cadastro_medico == True:
-                login_atual = get_login()   #pega o e-mail do usuário atual
+                login_atual = get_login(caixa_login)   #pega o e-mail do usuário atual
                 apagar_tudo_cadastro()
                 prosseguir = eventos[2]
             else:
@@ -569,7 +326,7 @@ while True:
                 aviso_existente = True
 
         if (click.getX() >= 179 and click.getX() <= 334) and (click.getY() >= 43 and click.getY() <= 102):
-            apagar_tudo_cadastro()
+            apagar_tudo_cadastro(caixa_login,caixa_senha,fundo_tela1,caixa_nome,caixa_cpf,fundo_tela5)
             caixa_login = gf.Entry(gf.Point(551,315),37)
             caixa_login.setFill(gf.color_rgb(218, 254, 236))
             caixa_login.setTextColor(gf.color_rgb(0, 0, 0))
@@ -588,7 +345,7 @@ while True:
 
     verificador_anticrash = False
     while prosseguir == eventos[4]:  # Usuário - edição e vizualização dos exames
-        exames_undraw()
+        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
         if verificador_anticrash == False:
             fundo_tela6.draw(janela)
         verificador_anticrash = True
@@ -639,13 +396,13 @@ while True:
     while prosseguir == eventos[5]:  #Editar último exame
         if verificador_anticrash == False:
             fundo_tela7.draw(janela)
-            exames_draw()
+            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
             verificador_anticrash = True
         click = janela.getMouse()
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739): #pega os dados novos dos Entrys
             data_atual = data_entry.getText()
-            saida = get_exames()
+            saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
 
             with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
                 for linha in arquivo:
