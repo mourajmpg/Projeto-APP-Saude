@@ -71,7 +71,7 @@ def fazer_cadastro(login,nome,cpf,senha): #faz o cadastro do usuário, gerando u
     dados_usuario_format = id_gerado + ';' + login + ';' + senha
     dados_usuario_format = dados_usuario_format.split(';')
     if (login!='') and (senha!=''):
-        valido = valida_email()
+        valido = valida_email(login)
         if valido == True:
             with open("dados_login.csv","r") as arquivo1:
                 for linha in arquivo1:
@@ -112,7 +112,7 @@ def fazer_cadastro_medico(login,nome,cpf,senha):
     dados_usuario_format = id_gerado + ';' + login + ';' + senha
     dados_usuario_format = dados_usuario_format.split(';')
     if (login!='') and (senha!=''):
-        valido = valida_email()
+        valido = valida_email(login)
         if valido == True:
             with open("dados_login_medico.csv","r") as arquivo1:
                 for linha in arquivo1:

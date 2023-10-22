@@ -17,13 +17,13 @@ fundo_tela1.draw(janela)
 
 
 caixa_login = gf.Entry(gf.Point(551,315),37)
-caixa_login.setFill(gf.color_rgb(218, 254, 236))
+caixa_login.setFill(gf.color_rgb(255, 255, 255))
 caixa_login.setTextColor(gf.color_rgb(0, 0, 0))
 caixa_login.draw(janela)
                                                                       #criando objetos
 
 caixa_senha = gf.Entry(gf.Point(551,415),37)
-caixa_senha.setFill(gf.color_rgb(218, 254, 236))
+caixa_senha.setFill(gf.color_rgb(255, 255, 255))
 caixa_senha.setTextColor(gf.color_rgb(0, 0, 0))
 caixa_senha.draw(janela)
 
@@ -119,7 +119,7 @@ eventos = ["1","2",'3','4','5','6'] #eventos para direcionar o programa
 aviso_incorreto = False
 aviso_existente = False
 
-prosseguir = eventos[0]
+prosseguir = eventos[0]     #Tela inicial
 while True:
     if prosseguir == eventos[0]:
         click = janela.getMouse()
@@ -143,7 +143,7 @@ while True:
                 prosseguir = eventos[1]
             else:
                 aviso_usuario_incorreto = gf.Text(gf.Point(550,465),"E-mail ou senha inválidos.")
-                aviso_usuario_incorreto.setTextColor(gf.color_rgb(0, 255, 128))
+                aviso_usuario_incorreto.setTextColor(gf.color_rgb(207, 58, 58))
                 aviso_usuario_incorreto.draw(janela)
                 aviso_incorreto = True
                 
@@ -168,7 +168,7 @@ while True:
                 prosseguir = eventos[2]
             else:
                 aviso_usuario_existente = gf.Text(gf.Point(550,465),"Email não cadastrado ou inválido")
-                aviso_usuario_existente.setTextColor(gf.color_rgb(0, 255, 128))
+                aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
                 aviso_usuario_existente.draw(janela)
                 aviso_existente = True
 
@@ -213,11 +213,10 @@ while True:
         if verificador_anticrash == False:    #evita crash e permite o loop do programa
             fundo_tela4.draw(janela)
             paciente_desejado_entry.draw(janela)
-            '''pacientes_text.draw(janela)'''
-            '''text_botao_gerar.draw(janela)'''
 
         verificador_anticrash = True
         click = janela.getMouse()
+        print(click)
 
         if (click.getX() >= 388 and click.getX() <= 713) and (click.getY() >= 587 and click.getY() <= 661):
             saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table><caption> Pacientes cadastrados </caption> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Nome </td> <td class="head"> CPF </td><tr>'
@@ -251,6 +250,22 @@ while True:
                 html.write(saida)
                 html.close()
             os.system('relatorio_paciente_desejado.html')
+        
+        if (click.getX() >= 110 and click.getX() <= 270) and (click.getY() >= 70 and click.getY() <= 123): #botão de voltar para página principal
+            paciente_desejado_entry.undraw()
+            fundo_tela4.undraw()
+            
+            caixa_login = gf.Entry(gf.Point(551,315),37)
+            caixa_login.setFill(gf.color_rgb(255, 255, 255))
+            caixa_login.draw(janela)
+
+            caixa_senha = gf.Entry(gf.Point(551,415),37)
+            caixa_senha.setFill(gf.color_rgb(255, 255, 255))
+            caixa_senha.draw(janela)
+
+            fundo_tela1.draw(janela)
+
+            prosseguir = eventos[0]
 
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -258,22 +273,22 @@ while True:
     while prosseguir == eventos[3]:  #sessão de cadastro paciente/medico
         if verificador_anticrash == False:
             caixa_login = gf.Entry(gf.Point(551,357),38)
-            caixa_login.setFill(gf.color_rgb(218, 254, 236))
+            caixa_login.setFill(gf.color_rgb(255, 255, 255))
             caixa_login.setTextColor(gf.color_rgb(0, 0, 0))
             caixa_login.draw(janela)
 
             caixa_senha = gf.Entry(gf.Point(551,429),38)
-            caixa_senha.setFill(gf.color_rgb(218, 254, 236))
+            caixa_senha.setFill(gf.color_rgb(255, 255, 255))
             caixa_senha.setTextColor(gf.color_rgb(0, 0, 0))
             caixa_senha.draw(janela)
 
             caixa_nome = gf.Entry(gf.Point(551,211),38)
-            caixa_nome.setFill(gf.color_rgb(218, 254, 236))
+            caixa_nome.setFill(gf.color_rgb(255, 255, 255))
             caixa_nome.setTextColor(gf.color_rgb(0, 0, 0))
             caixa_nome.draw(janela)
 
             caixa_cpf = gf.Entry(gf.Point(551,284),38)
-            caixa_cpf.setFill(gf.color_rgb(218, 254, 236))
+            caixa_cpf.setFill(gf.color_rgb(255, 255, 255))
             caixa_cpf.setTextColor(gf.color_rgb(0, 0, 0))
             caixa_cpf.draw(janela)
 
@@ -289,7 +304,7 @@ while True:
 
         if (click.getX() >= 452 and click.getX() <= 648) and (click.getY() >= 586 and click.getY() <= 624):  #cadastro como paciente
             #verifica se o cadastro pode ser efetuado
-            verificacao_cadastro = fazer_cadastro()
+            verificacao_cadastro = fazer_cadastro(login,nome,cpf,senha)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
                 aviso_usuario_existente.undraw()
@@ -298,7 +313,7 @@ while True:
 
             if verificacao_cadastro == True:
                 login_atual = get_login(caixa_login)   #pega o e-mail do usuário atual
-                apagar_tudo_cadastro()
+                apagar_tudo_cadastro(caixa_login,caixa_senha,fundo_tela1,caixa_nome,caixa_cpf,fundo_tela5)
                 prosseguir = eventos[1]
             else:
                 aviso_usuario_existente = gf.Text(gf.Point(550,465),"Usuário existente ou inválido.")
@@ -308,7 +323,7 @@ while True:
 
         if (click.getX() >= 452 and click.getX() <= 648) and (click.getY() >= 647 and click.getY() <= 686): # cadastro como medico
             #verifica se o cadastro pode ser efetuado
-            verificacao_cadastro_medico = fazer_cadastro_medico()
+            verificacao_cadastro_medico = fazer_cadastro_medico(login,nome,cpf,senha)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
                 aviso_usuario_existente.undraw()
@@ -325,15 +340,15 @@ while True:
                 aviso_usuario_existente.draw(janela)
                 aviso_existente = True
 
-        if (click.getX() >= 179 and click.getX() <= 334) and (click.getY() >= 43 and click.getY() <= 102):
+        if (click.getX() >= 179 and click.getX() <= 334) and (click.getY() >= 43 and click.getY() <= 102): #botão de voltar para página principal
             apagar_tudo_cadastro(caixa_login,caixa_senha,fundo_tela1,caixa_nome,caixa_cpf,fundo_tela5)
             caixa_login = gf.Entry(gf.Point(551,315),37)
-            caixa_login.setFill(gf.color_rgb(218, 254, 236))
+            caixa_login.setFill(gf.color_rgb(255, 255, 255))
             caixa_login.setTextColor(gf.color_rgb(0, 0, 0))
             caixa_login.draw(janela)
 
             caixa_senha = gf.Entry(gf.Point(551,415),37)
-            caixa_senha.setFill(gf.color_rgb(218, 254, 236))
+            caixa_senha.setFill(gf.color_rgb(255, 255, 255))
             caixa_senha.setTextColor(gf.color_rgb(0, 0, 0))
             caixa_senha.draw(janela)
 
