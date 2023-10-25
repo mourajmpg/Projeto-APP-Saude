@@ -67,9 +67,12 @@ def fazer_cadastro(login,nome,cpf,senha): #faz o cadastro do usuário, gerando u
             arquivo.close()
 
     #testa se o cadastro é válido
+    cpf = formata_cpf(cpf)
     dados_usuario = id_gerado + ';' + login + ';' + senha + ";" + nome + ';' + cpf + '\n'
     dados_usuario_format = id_gerado + ';' + login + ';' + senha
     dados_usuario_format = dados_usuario_format.split(';')
+    verificacao_cadastro = False
+    verificacao_cpf = False
     if (login!='') and (senha!=''):
         valido = valida_email(login)
         if valido == True:
@@ -82,8 +85,9 @@ def fazer_cadastro(login,nome,cpf,senha): #faz o cadastro do usuário, gerando u
                         break
                     else:
                         verificacao_cadastro = True
+                        verificacao_cpf = valida_cpf(cpf)
                 arquivo1.close()
-                if verificacao_cadastro == True:
+                if (verificacao_cadastro == True) and (verificacao_cpf == True):
                     with open('dados_login.csv','a') as arquivo2:
                             arquivo2.write(dados_usuario)
                             arquivo2.close()
@@ -236,4 +240,63 @@ def gera_id(): #gera um id aleatório de 5 dígitos
         id = id + str(num)
     return id
 
+def valida_cpf(cpf):
+    cont = 1
+    cont_10 = 10
+    cont_11 = 11
+    num_comp = ''
+    soma10 = 0
+    soma11 = 0
+    verificacao_cpf = False
 
+    if '.' in cpf:
+        cpf = cpf.replace('.','')
+    if '-' in cpf:
+        cpf = cpf.replace('-','')
+
+    if len(cpf) != 11:
+        verificacao_cpf = False
+    else:
+        for num in cpf:
+            if cont_10 > 1:
+                soma10 = soma10 + (int(num) * cont_10)
+            if cont_11 > 1:
+                soma11 = soma11 + (int(num) * cont_11)
+            cont_10 = cont_10 - 1
+            cont_11 = cont_11 - 1
+            cont = cont + 1
+
+        verificação1 = 11 - (soma10 % 11)
+        verificação2 = 11 - (soma11 % 11)
+
+        if verificação1 == 10:
+            verificação1 = 0
+        if verificação2 == 10:
+            verificação2 = 0
+
+        if str(verificação1) == cpf[9] and str(verificação2) == cpf[10]:
+            verificacao_cpf = True
+        else:
+            verificacao_cpf = False
+        
+    return verificacao_cpf
+
+def formata_cpf(cpf):
+    cont = 1
+    num_comp = ''
+    if '.' in cpf:
+        cpf = cpf.replace('.','')
+    if '-' in cpf:
+        cpf = cpf.replace('-','')
+
+    for num in cpf:
+        if cont == 3:
+            num_comp = num_comp + num + "."
+        elif cont == 6:
+            num_comp = num_comp + num + "."
+        elif cont == 9:
+            num_comp = num_comp + num + "-"
+        else:
+            num_comp = num_comp + num
+        cont = cont + 1
+    return num_comp
