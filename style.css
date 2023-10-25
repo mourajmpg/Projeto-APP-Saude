@@ -15,7 +15,7 @@
         
         /* Estilo para a primeira linha*/
         td.head {
-            background-color: #00ff80;
+            background-color: #4363ED;
             font-weight: bold;
         }
 
@@ -23,13 +23,13 @@
         td {
             padding: 10px;
 
-            background-color: #dafeec;
+            background-color: #c3ceff;
             font-weight: 500;
         }
 
         /* Estilo quando o cursor está sobre uma célula */
         td:hover {
-            background-color: #00ff80;
+            background-color: #4363ED;
             color: white;
         }
 

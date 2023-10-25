@@ -6,7 +6,7 @@ from functions import *
 
 fundo_tela1 = gf.Image(gf.Point(550,400),"Login.png")
 fundo_tela2 = gf.Image(gf.Point(550,400),"Cadastro.png")
-fundo_tela3 = gf.Image(gf.Point(550,400),"Paciente_Exame.png")
+fundo_tela3 = gf.Image(gf.Point(550,400),"Paciente_Editar_Exame.png")
 fundo_tela4 = gf.Image(gf.Point(550,400),"Medico_Pesquisar.png")
 fundo_tela5 = gf.Image(gf.Point(550,400),"Cadastro.png")
 fundo_tela6 = gf.Image(gf.Point(550,400),"Paciente_Editar.png")
@@ -174,7 +174,7 @@ while True:
 
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    informacoes_desenhadas = False
+    informacoes_desenhadas = False    #introdução dos dados dos exames
     while prosseguir == eventos[1]:
         if informacoes_desenhadas == False:
             fundo_tela3.draw(janela)
@@ -182,6 +182,7 @@ while True:
 
         informacoes_desenhadas = True #verifica se os objetos forma desenhados e evita o crash
         click = janela.getMouse()
+        print(click)
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739):     #verifica as coordenadas e pega os dados dos Entrys
             data_atual = data_entry.getText()
@@ -205,6 +206,41 @@ while True:
                 arquivo.close()
             prosseguir = eventos[4]            #passa para o próximo evento
 
+        if (click.getX() >= 106 and click.getX() <= 246) and (click.getY() >= 63 and click.getY() <= 118): #botão de voltar para página principal
+            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
+
+            prosseguir = eventos[0]
+            caixa_login = gf.Entry(gf.Point(551,315),37)
+            caixa_login.setFill(gf.color_rgb(255, 255, 255))
+            caixa_login.draw(janela)
+
+            caixa_senha = gf.Entry(gf.Point(551,415),37)
+            caixa_senha.setFill(gf.color_rgb(255, 255, 255))
+            caixa_senha.draw(janela)
+
+            fundo_tela1.draw(janela)
+        
+        if (click.getX() >= 195 and click.getX() <= 349) and (click.getY() >= 585 and click.getY() <= 652): #botão para ver os exames
+            with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
+                for linha in arquivo:
+                    lista = linha.split(';')
+                    if login_atual in lista:
+                        id_atual = lista[0]
+                arquivo.close()
+
+            saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemácias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematócrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucócitos </td> <td class="head"> Basófilos </td> <td class="head"> Eosinófilos </td> <td class="head"> Mielócitos </td> <td class="head"> Metamielócitos </td> <td class="head"> Bastões </td> <td class="head"> Segmentados </td> <td class="head"> Linfócitos </td> <td class="head"> Linfócitos atípicos </td> <td class="head"> Monócitos </td> <td class="head"> VPM </td> <td class="head"> Plaquetócrito </td> <td class="head"> PDW </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Data </td></tr>'
+            with open('dados_exames.csv','r') as arquivo:
+                for linha in arquivo:
+                    linha = linha[:-1].split(";")
+                    if linha[0] == id_atual:
+                        saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[2]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td> <td> {linha[5]} </td> <td> {linha[6]} </td> <td> {linha[7]} </td> <td> {linha[8]} </td> <td> {linha[9]} </td> <td> {linha[10]} </td> <td> {linha[11]} </td> <td> {linha[12]} </td> <td> {linha[13]} </td> <td> {linha[14]} </td> <td> {linha[15]} </td> <td> {linha[16]} </td> <td> {linha[17]} </td> <td> {linha[18]} </td> <td> {linha[19]} </td> <td> {linha[20]} </td> <td> {linha[21]} </td> <td> {linha[22]} </td> <td> {linha[23]} </td> <td> {linha[24]} </td>')
+                arquivo.close()
+            saida = saida + '</table></body></html>'
+
+            with open('relatorio_paciente_desejado.html','w', encoding="UTF-8") as html:
+                html.write(saida)
+                html.close()
+            os.system('relatorio_paciente_desejado.html')
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             
     verificador_anticrash = False
@@ -305,40 +341,56 @@ while True:
         if (click.getX() >= 452 and click.getX() <= 648) and (click.getY() >= 586 and click.getY() <= 624):  #cadastro como paciente
             #verifica se o cadastro pode ser efetuado
             verificacao_cadastro = fazer_cadastro(login,nome,cpf,senha)
+            verificacao_cpf = valida_cpf(cpf)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
                 aviso_usuario_existente.undraw()
             if aviso_incorreto == True:
                 aviso_usuario_incorreto.undraw()
 
-            if verificacao_cadastro == True:
+            if verificacao_cadastro == True and verificacao_cpf == True:
                 login_atual = get_login(caixa_login)   #pega o e-mail do usuário atual
                 apagar_tudo_cadastro(caixa_login,caixa_senha,fundo_tela1,caixa_nome,caixa_cpf,fundo_tela5)
                 prosseguir = eventos[1]
             else:
-                aviso_usuario_existente = gf.Text(gf.Point(550,465),"Usuário existente ou inválido.")
-                aviso_usuario_existente.setTextColor(gf.color_rgb(0, 255, 128))
-                aviso_usuario_existente.draw(janela)
-                aviso_existente = True
+                if verificacao_cadastro == True and verificacao_cpf == False:
+                    aviso_usuario_existente = gf.Text(gf.Point(550,465),"CPF inválido.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
+                else:
+                    aviso_usuario_existente = gf.Text(gf.Point(550,465),"Usuário existente ou inválido.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
+
 
         if (click.getX() >= 452 and click.getX() <= 648) and (click.getY() >= 647 and click.getY() <= 686): # cadastro como medico
             #verifica se o cadastro pode ser efetuado
             verificacao_cadastro_medico = fazer_cadastro_medico(login,nome,cpf,senha)
+            verificacao_cpf = valida_cpf(cpf)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
                 aviso_usuario_existente.undraw()
             if aviso_incorreto == True:
                 aviso_usuario_incorreto.undraw()
 
-            if verificacao_cadastro_medico == True:
+            if verificacao_cadastro_medico == True and verificacao_cpf == True:
                 login_atual = get_login(caixa_login)   #pega o e-mail do usuário atual
-                apagar_tudo_cadastro()
+                apagar_tudo_cadastro(caixa_login,caixa_senha,fundo_tela1,caixa_nome,caixa_cpf,fundo_tela5)
                 prosseguir = eventos[2]
             else:
-                aviso_usuario_existente = gf.Text(gf.Point(550,465),"Usuário existente ou inválido.")
-                aviso_usuario_existente.setTextColor(gf.color_rgb(0, 255, 128))
-                aviso_usuario_existente.draw(janela)
-                aviso_existente = True
+                if verificacao_cadastro_medico == True and verificacao_cpf == False:
+                    aviso_usuario_existente = gf.Text(gf.Point(550,465),"CPF inválido.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
+                else:
+                    aviso_usuario_existente = gf.Text(gf.Point(550,465),"Usuário existente ou inválido.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
+
 
         if (click.getX() >= 179 and click.getX() <= 334) and (click.getY() >= 43 and click.getY() <= 102): #botão de voltar para página principal
             apagar_tudo_cadastro(caixa_login,caixa_senha,fundo_tela1,caixa_nome,caixa_cpf,fundo_tela5)
@@ -366,6 +418,7 @@ while True:
         verificador_anticrash = True
 
         click = janela.getMouse()
+        print(click)
 
         #Botão (voltar)
         if (click.getX() >= 101 and click.getX() <= 260) and (click.getY() >= 58 and click.getY() <= 119): 
@@ -400,11 +453,12 @@ while True:
             fundo_tela6.undraw()
             prosseguir = eventos[5]
 
-
         #Botão (sair)
-        if (click.getX() >= 469 and click.getX() <= 614) and (click.getY() >= 564 and click.getY() <= 622): 
+        if (click.getX() >= 463 and click.getX() <= 605) and (click.getY() >= 665 and click.getY() <= 719): 
             janela.close()
 
+        if (click.getX() >= 357 and click.getX() <= 730) and (click.getY() >= 571 and click.getY() <= 639): #estado de saúde
+            print('ok')
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
     verificador_anticrash = False
@@ -414,7 +468,7 @@ while True:
             exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
             verificador_anticrash = True
         click = janela.getMouse()
-
+        print(click)
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739): #pega os dados novos dos Entrys
             data_atual = data_entry.getText()
             saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
@@ -448,9 +502,12 @@ while True:
       
                     else:
                         aviso_data_incorreta = gf.Text(gf.Point(825,694),"Você não possui um exame com essa data.")
-                        aviso_data_incorreta.setTextColor(gf.color_rgb(0, 255, 128))
+                        aviso_data_incorreta.setTextColor(gf.color_rgb(207, 58, 58))
                         aviso_data_incorreta.draw(janela)
                 arquivo.close()
             fundo_tela7.undraw()
-
-                    
+        
+        if (click.getX() >= 104 and click.getX() <= 246) and (click.getY() >= 64 and click.getY() <= 120): # botão de voltar
+            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
+            fundo_tela7.undraw()
+            prosseguir = eventos[4]
