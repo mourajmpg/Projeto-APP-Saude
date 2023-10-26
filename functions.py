@@ -195,7 +195,7 @@ def exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,h
     data_entry.undraw()
     fundo_tela3.undraw()
 
-def get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry): #pega os dados dos exames digitados
+def get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual): #pega os dados dos exames digitados
     hemacias_get = hemacias_entry.getText()
     hemoglobina_get = hemoglobina_entry.getText()
     hematocrito_get = hematocrito_entry.getText()
@@ -216,7 +216,7 @@ def get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_
     vpm_get = vpm_entry.getText()
     plaquetocrito_get = plaquetocrito_entry.getText()
     pdw_get = pdw_entry.getText()
-    data_get = data_entry.getText()
+    data_get = data_atual
     ldl_get = ldl_entry.getText()
     hdl_get = hdl_entry.getText()
 
@@ -307,3 +307,134 @@ def formata_cpf(cpf):
             num_comp = num_comp + num
         cont = cont + 1
     return num_comp
+
+def valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual):
+    informacoes = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+    informacoes = informacoes.replace(';','')
+    informacoes = informacoes.replace('/','')
+    print(informacoes)
+    inteiros = ['1','2','3','4','5','6','7','8','9','0']
+    for iten in informacoes:
+        if iten not in inteiros:
+            verificacao_inteiro = False
+            break
+        else:
+            verificacao_inteiro = True
+
+    return verificacao_inteiro
+
+def valida_data(data_entry):
+    data = data_entry.getText()
+    dia = ''
+    mes = ''
+    ano = ''
+    verificacao_data = False
+
+    if '/' in data:
+        data = data.replace('/','')
+
+    if len(data) != 8:
+        verificacao_data = False
+
+    else:
+        cont = 1
+        for num in data:
+            if cont <= 2:
+                dia = dia + num
+            elif cont <= 4 and cont > 2:
+                mes = mes + num
+            elif cont <= 8 and cont > 4:
+                ano = ano + num
+            cont = cont + 1
+        print(dia, mes, ano)
+        dia = int(dia)
+        mes = int(mes)
+        ano = int(ano)
+
+        if dia <= 0 or dia > 31 or mes <= 0 or mes > 12 or ano <= 0:
+            verificacao_data = False
+        else:
+            if ano % 4 == 0:
+                if (dia > 29 and mes == 2) or (dia > 30 and mes == 4) or (dia > 30 and mes == 6) or (dia > 30 and mes == 9) or (dia > 30 and mes == 11):
+                    verificacao_data = False
+                else:
+                    verificacao_data = True
+            else:
+                if (dia > 28 and mes == 2) or (dia > 30 and mes == 4) or (dia > 30 and mes == 6) or (dia > 30 and mes == 9) or (dia > 30 and mes == 11):
+                    verificacao_data = False
+                else:
+                    verificacao_data = True
+            
+            data = str(f'{data[0] + data[1]}/{data[2] + data[3]}/{data[4] + data[5] + data[6] + data[7]}')
+    return verificacao_data
+
+def formata_data(data_entry):
+    data = data_entry.getText()
+    dia = ''
+    mes = ''
+    ano = ''
+
+    if '/' in data:
+        data = data.replace('/','')
+    
+    cont = 1
+    for num in data:
+        if cont <= 2:
+            dia = dia + num
+        elif cont <= 4 and cont > 2:
+            mes = mes + num
+        elif cont <= 8 and cont > 4:
+            ano = ano + num
+            cont = cont + 1
+
+    if len(data) != 8:
+        data = '55/55/5555'  #para invalida-lá
+    
+    data = str(f'{data[0] + data[1]}/{data[2] + data[3]}/{data[4] + data[5] + data[6] + data[7]}')
+    return data
+
+def idade_sexo_draw(janela,idade_entry,sexo_entry):
+    idade_entry.draw(janela)
+    sexo_entry.draw(janela)
+
+def get_idade_sexo(idade_entry,sexo_entry):
+    idade = idade_entry.getText()
+    sexo = sexo_entry.getText()
+    lista = [idade,sexo]
+    return lista
+    
+def idade_sexo_undraw(idade_entry,sexo_entry):
+    idade_entry.undraw()
+    sexo_entry.undraw()
+
+def validar_idade_sexo(idade,sexo):
+    idade_valida = False
+    sexo_valido = False
+    
+    if (idade != '') and (sexo != ''):
+        if (int(idade) > 0) and (int(idade)<120):
+            idade_valida = True
+        if (sexo=='f') or (sexo=='F') or (sexo=='m') or (sexo=='M'):
+            sexo_valido = True
+    
+    if (sexo_valido==True) and (idade_valida==True):
+        return True
+    else:
+        return False
+        
+def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry):
+    texto_exames = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
+    lista = texto_exames.split(';')
+
+    with open('relatorio_minha_saude.html','w', encoding='UTF-8') as arq:
+        niveis = ['Acima dos níveis indicados','Dentro dos níveis indicados','Abaixo dos níveis indicados']
+        saida = '<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>Minha Saúde</title></head><body><table>'
+        cont = 0
+        while cont < len(lista):
+            if cont==0:
+                saida += (f'<tr><td>Hemácias</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+            cont += 1
+        
+        saida += '</table></body></html>'
+        arq.write(saida)        
+        arq.close()

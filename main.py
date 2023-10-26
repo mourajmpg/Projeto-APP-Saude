@@ -11,6 +11,7 @@ fundo_tela4 = gf.Image(gf.Point(550,400),"Medico_Pesquisar.png")
 fundo_tela5 = gf.Image(gf.Point(550,400),"Cadastro.png")
 fundo_tela6 = gf.Image(gf.Point(550,400),"Paciente_Editar.png")
 fundo_tela7 = gf.Image(gf.Point(550,400),"Paciente_Editar_Exame.png")
+fundo_tela8 = gf.Image(gf.Point(550,400),"Paciente_Minha_Saude.png")
 
 janela = gf.GraphWin("Analizador de hemograma",1100,800)
 fundo_tela1.draw(janela)
@@ -105,6 +106,12 @@ ldl_entry.setFill(gf.color_rgb(255,255,255))
 data_entry = gf.Entry(gf.Point(820,609),10)
 data_entry.setFill(gf.color_rgb(255,255,255))
 
+idade_entry = gf.Entry(gf.Point(535,386),38)
+idade_entry.setFill(gf.color_rgb(255,255,255))
+
+sexo_entry = gf.Entry(gf.Point(535,505),38)
+sexo_entry.setFill(gf.color_rgb(255,255,255))
+
 
 #textos
 
@@ -114,7 +121,7 @@ paciente_desejado_entry.setFill(gf.color_rgb(255,255,255))
 
 gf.update(10)
 
-eventos = ["1","2",'3','4','5','6'] #eventos para direcionar o programa
+eventos = ["1","2",'3','4','5','6','7'] #eventos para direcionar o programa
 
 aviso_incorreto = False
 aviso_existente = False
@@ -185,26 +192,46 @@ while True:
         print(click)
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739):     #verifica as coordenadas e pega os dados dos Entrys
-            data_atual = data_entry.getText()
-            saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
-            with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
-                for linha in arquivo:
-                    lista = linha.split(';')
-                    if login_atual in lista:
-                        id_atual = lista[0]
-                arquivo.close()
-            
-            informacoes = ''
-            with open("dados_exames.csv","r") as arquivo:
-                for linha in arquivo:
-                    informacoes = informacoes + linha
-                arquivo.close()
-            with open('dados_exames.csv','w',encoding='UTF-8') as arquivo:  #escreve no csv dos exames o id, login e a saida
-                texto = informacoes + id_atual + ';' + login_atual + ';' + saida + '\n'
-                #print(texto)
-                arquivo.write(texto)
-                arquivo.close()
-            prosseguir = eventos[4]            #passa para o próximo evento
+            data_atual = formata_data(data_entry)
+            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+            verificacao_data = valida_data(data_entry)
+            #Verifica e remove se ja existe um aviso na tela, evitando crash
+            if aviso_existente == True:
+                aviso_usuario_existente.undraw()
+            if aviso_incorreto == True:
+                aviso_usuario_incorreto.undraw()
+
+            if verificacao_inteiro == True and verificacao_data == True:
+                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+                with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
+                    for linha in arquivo:
+                        lista = linha.split(';')
+                        if login_atual in lista:
+                            id_atual = lista[0]
+                    arquivo.close()
+    
+                informacoes = ''
+                with open("dados_exames.csv","r") as arquivo:
+                    for linha in arquivo:
+                        informacoes = informacoes + linha
+                    arquivo.close()
+                with open('dados_exames.csv','w',encoding='UTF-8') as arquivo:  #escreve no csv dos exames o id, login e a saida
+                    texto = informacoes + id_atual + ';' + login_atual + ';' + saida + '\n'
+                    #print(texto)
+                    arquivo.write(texto)
+                    arquivo.close()
+                prosseguir = eventos[4]            #passa para o próximo evento
+            else:
+                if verificacao_inteiro == True and verificacao_data == False:
+                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Por favor, insira um formato válido \n para a data, assim como está no exemplo.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
+                else:
+                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Insira apenas números \n nas informações do seu exame.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
 
         if (click.getX() >= 106 and click.getX() <= 246) and (click.getY() >= 63 and click.getY() <= 118): #botão de voltar para página principal
             exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
@@ -457,8 +484,11 @@ while True:
         if (click.getX() >= 463 and click.getX() <= 605) and (click.getY() >= 665 and click.getY() <= 719): 
             janela.close()
 
-        if (click.getX() >= 357 and click.getX() <= 730) and (click.getY() >= 571 and click.getY() <= 639): #estado de saúde
-            print('ok')
+        #Botão (minha saúde)
+        if (click.getX() >= 357 and click.getX() <= 730) and (click.getY() >= 571 and click.getY() <= 639): 
+            fundo_tela6.undraw()
+            prosseguir = eventos[6]
+            
 #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
     verificador_anticrash = False
@@ -467,47 +497,106 @@ while True:
             fundo_tela7.draw(janela)
             exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
             verificador_anticrash = True
+
         click = janela.getMouse()
         print(click)
+
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739): #pega os dados novos dos Entrys
-            data_atual = data_entry.getText()
-            saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
+            data_atual = formata_data(data_entry)
+            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+            verificacao_data = valida_data(data_entry)
+            #Verifica e remove se ja existe um aviso na tela, evitando crash
+            if aviso_existente == True:
+                aviso_usuario_existente.undraw()
+            if aviso_incorreto == True:
+                aviso_usuario_incorreto.undraw()
 
-            with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
-                for linha in arquivo:
-                    lista = linha.split(';')
-                    if login_atual in lista:
-                        id_atual = lista[0]
-                arquivo.close()
-            
-            with open('dados_exames.csv','r',encoding='UTF-8') as arquivo:
-                lista_dados_exames = arquivo.readlines()  #separa o arquivo em uma grande lista
-                separador =''
+            if verificacao_inteiro == True and verificacao_data == True:
+                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
 
-                for i in lista_dados_exames:
-                    lista_paciente = i[:-1].split(';')
+                with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
+                    for linha in arquivo:
+                        lista = linha.split(';')
+                        if login_atual in lista:
+                            id_atual = lista[0]
+                    arquivo.close()
+                
+                with open('dados_exames.csv','r',encoding='UTF-8') as arquivo:
+                    lista_dados_exames = arquivo.readlines()  #separa o arquivo em uma grande lista
+                    separador =''
 
-                    if (id_atual == lista_paciente[0]) and (data_atual == lista_paciente[-1]):   #verifica se a data existe
-                        texto_editado = id_atual + ';' + login_atual + ';' + saida + '\n'    #texto com a saida editada
-                        index = lista_dados_exames.index(i)    #index da do elemento atual da lista
-                        lista_dados_exames[index] = texto_editado  #reescreve elemento da lista
+                    for i in lista_dados_exames:
+                        lista_paciente = i[:-1].split(';')
 
-                        with open('dados_exames.csv','w',encoding='UTF-8') as arquivo_editado:
-                            lista_dados_exames = separador.join(lista_dados_exames)  #junta a lista em uma string 
-                            print(lista_dados_exames)
-                            arquivo_editado.write(lista_dados_exames)
-                            arquivo_editado.close()
-                        prosseguir = eventos[4]
-                        break
-      
-                    else:
-                        aviso_data_incorreta = gf.Text(gf.Point(825,694),"Você não possui um exame com essa data.")
-                        aviso_data_incorreta.setTextColor(gf.color_rgb(207, 58, 58))
-                        aviso_data_incorreta.draw(janela)
-                arquivo.close()
-            fundo_tela7.undraw()
+                        if (id_atual == lista_paciente[0]) and (data_atual == lista_paciente[-1]):   #verifica se a data existe
+                            texto_editado = id_atual + ';' + login_atual + ';' + saida + '\n'    #texto com a saida editada
+                            index = lista_dados_exames.index(i)    #index da do elemento atual da lista
+                            lista_dados_exames[index] = texto_editado  #reescreve elemento da lista
+
+                            with open('dados_exames.csv','w',encoding='UTF-8') as arquivo_editado:
+                                lista_dados_exames = separador.join(lista_dados_exames)  #junta a lista em uma string 
+                                print(lista_dados_exames)
+                                arquivo_editado.write(lista_dados_exames)
+                                arquivo_editado.close()
+                            prosseguir = eventos[4]
+                            break
+        
+                        else:
+                            aviso_data_incorreta = gf.Text(gf.Point(825,694),"Você não possui um exame com essa data.")
+                            aviso_data_incorreta.setTextColor(gf.color_rgb(207, 58, 58))
+                            aviso_data_incorreta.draw(janela)
+                    arquivo.close()
+                fundo_tela7.undraw()
+            else:
+                if verificacao_inteiro == True and verificacao_data == False:
+                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Por favor, insira um formato válido \n para a data, assim como está no exemplo.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
+                else:
+                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Insira apenas números \n nas informações do seu exame.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.draw(janela)
+                    aviso_existente = True
         
         if (click.getX() >= 104 and click.getX() <= 246) and (click.getY() >= 64 and click.getY() <= 120): # botão de voltar
             exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
             fundo_tela7.undraw()
             prosseguir = eventos[4]
+            
+            
+#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+    verificador_anticrash = False
+    while prosseguir == eventos[6]:  #Minha Saúde
+        if verificador_anticrash == False:
+            fundo_tela8.draw(janela)
+            verificador_anticrash = True
+            idade_sexo_draw(janela,idade_entry,sexo_entry)
+        click = janela.getMouse()
+        #print(click)
+        
+        if (click.getX() >= 104 and click.getX() <= 246) and (click.getY() >= 64 and click.getY() <= 120): # botão de voltar
+            idade_sexo_undraw(idade_entry,sexo_entry)
+            fundo_tela8.undraw()
+            prosseguir = eventos[4]
+            
+        if (click.getX() >= 404 and click.getX() <= 695) and (click.getY() >= 638 and click.getY() <= 727): #gerar relatório
+            lista = get_idade_sexo(idade_entry,sexo_entry)
+            idade = lista[0]
+            sexo = lista[1]
+            
+            if validar_idade_sexo(idade,sexo) == True:
+                teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+                os.system('relatorio_minha_saude.html')
+                
+            else:
+                aviso_data_incorreta = gf.Text(gf.Point(825,694),"Dados inválidos")
+                aviso_data_incorreta.setTextColor(gf.color_rgb(207, 58, 58))
+                aviso_data_incorreta.draw(janela)
+            
+            
+            
+            
+        
+            
+        
