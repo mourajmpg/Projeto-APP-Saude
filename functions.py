@@ -307,3 +307,52 @@ def formata_cpf(cpf):
             num_comp = num_comp + num
         cont = cont + 1
     return num_comp
+
+def idade_sexo_draw(janela,idade_entry,sexo_entry):
+    idade_entry.draw(janela)
+    sexo_entry.draw(janela)
+
+def get_idade_sexo(idade_entry,sexo_entry):
+    idade = idade_entry.getText()
+    sexo = sexo_entry.getText()
+    lista = [idade,sexo]
+    return lista
+    
+def idade_sexo_undraw(idade_entry,sexo_entry):
+    idade_entry.undraw()
+    sexo_entry.undraw()
+
+def validar_idade_sexo(idade,sexo):
+    idade_valida = False
+    sexo_valido = False
+    
+    if (idade != '') and (sexo != ''):
+        if (int(idade) > 0) and (int(idade)<120):
+            idade_valida = True
+        if (sexo=='f') or (sexo=='F') or (sexo=='m') or (sexo=='M'):
+            sexo_valido = True
+    
+    if (sexo_valido==True) and (idade_valida==True):
+        return True
+    else:
+        return False
+        
+
+def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry):
+    texto_exames = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
+    lista = texto_exames.split(';')
+
+    with open('relatorio_minha_saude.html','w', encoding='UTF-8') as arq:
+        niveis = ['Acima dos níveis indicados','Dentro dos níveis indicados','Abaixo dos níveis indicados']
+        saida = '<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>Minha Saúde</title></head><body><table>'
+        cont = 0
+        while cont < len(lista):
+            if cont==0:
+                saida += (f'<tr><td>Hemácias</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+            cont += 1
+        
+        saida += '</table></body></html>'
+        arq.write(saida)        
+        arq.close()
+                
+            
