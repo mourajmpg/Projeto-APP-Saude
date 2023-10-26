@@ -406,7 +406,7 @@ def get_idade_sexo(idade_entry,sexo_entry):
 def idade_sexo_undraw(idade_entry,sexo_entry):
     idade_entry.undraw()
     sexo_entry.undraw()
-
+    
 def validar_idade_sexo(idade,sexo):
     idade_valida = False
     sexo_valido = False
@@ -438,3 +438,4 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
         saida += '</table></body></html>'
         arq.write(saida)        
         arq.close()
+

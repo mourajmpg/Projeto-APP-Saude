@@ -594,9 +594,3 @@ while True:
                 aviso_data_incorreta.setTextColor(gf.color_rgb(207, 58, 58))
                 aviso_data_incorreta.draw(janela)
             
-            
-            
-            
-        
-            
-        
