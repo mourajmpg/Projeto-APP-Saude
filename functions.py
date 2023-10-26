@@ -438,4 +438,5 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
         saida += '</table></body></html>'
         arq.write(saida)        
         arq.close()
-
+                
+            
