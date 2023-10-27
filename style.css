@@ -1,10 +1,18 @@
         /* Estilo da tabela */
-        
+        body{
+            text-align: center; /* Centralizar conteúdo horizontalmente */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centralizar conteúdo verticalmente */
+        }
+
         table {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-weight: 400;
             margin-top: 20px;
             text-align: center;
+            margin-top: 20px;
+            margin: 0 auto;
         }
 
         /* Estilo da caption */
