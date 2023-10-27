@@ -1,5 +1,4 @@
 import random as rd
-
 def get_login(caixa_login): #pega a informação de login
     login = caixa_login.getText()
     return login
@@ -142,7 +141,7 @@ def fazer_cadastro_medico(login,nome,cpf,senha):
         verificacao_cadastro_medico = False
     return verificacao_cadastro_medico
 
-def exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry): #desenha os obejtos da aba de exames
+def exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry): #desenha os obejtos da aba de exames
     hemacias_entry.draw(janela)
     hemoglobina_entry.draw(janela)
     hematocrito_entry.draw(janela)
@@ -164,11 +163,13 @@ def exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_en
     vpm_entry.draw(janela)
     plaquetocrito_entry.draw(janela)
     pdw_entry.draw(janela)
+    triglicerideos_entry.draw(janela)
     hdl_entry.draw(janela)
     ldl_entry.draw(janela)
+    colesterol_entry.draw(janela)
     data_entry.draw(janela)
-
-def exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3): #apaga os objetos e o background da aba de exames
+    
+def exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3): #apaga os objetos e o background da aba de exames
     hemacias_entry.undraw()
     hemoglobina_entry.undraw()
     hematocrito_entry.undraw()
@@ -190,12 +191,14 @@ def exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,h
     vpm_entry.undraw()
     plaquetocrito_entry.undraw()
     pdw_entry.undraw()
+    triglicerideos_entry.undraw()
     hdl_entry.undraw()
     ldl_entry.undraw()
+    colesterol_entry.undraw()
     data_entry.undraw()
     fundo_tela3.undraw()
 
-def get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual): #pega os dados dos exames digitados
+def get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual): #pega os dados dos exames digitados
     hemacias_get = hemacias_entry.getText()
     hemoglobina_get = hemoglobina_entry.getText()
     hematocrito_get = hematocrito_entry.getText()
@@ -213,14 +216,17 @@ def get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_
     linfocitos_get = linfocitos_entry.getText()
     linfocitos_atipicos_get = linfocitos_atipicos_entry.getText()
     monocitos_get = monocitos_entry.getText()
+    plaquetas_get = plaquetas_entry.getText()
     vpm_get = vpm_entry.getText()
     plaquetocrito_get = plaquetocrito_entry.getText()
     pdw_get = pdw_entry.getText()
-    data_get = data_atual
+    triglicerideos_get = triglicerideos_entry.getText()
     ldl_get = ldl_entry.getText()
     hdl_get = hdl_entry.getText()
+    colesterol_get = colesterol_entry.getText()
+    data_get = data_atual
 
-    texto_exames = hemacias_get+';'+hemoglobina_get+';'+hematocrito_get+';'+vcm_get+';'+hcm_get+';'+chcm_get+';'+rdw_get+';'+leucocitos_get+';'+basofilos_get+';'+eosinofilos_get+';'+mielocitos_get+';'+metamielocitos_get+';'+bastoes_get+';'+segmentados_get+';'+linfocitos_get+';'+linfocitos_atipicos_get+';'+monocitos_get+';'+vpm_get+';'+plaquetocrito_get+';'+pdw_get+';'+ldl_get+';'+hdl_get+';'+data_get
+    texto_exames = hemacias_get+';'+hemoglobina_get+';'+hematocrito_get+';'+vcm_get+';'+hcm_get+';'+chcm_get+';'+rdw_get+';'+leucocitos_get+';'+basofilos_get+';'+eosinofilos_get+';'+mielocitos_get+';'+metamielocitos_get+';'+bastoes_get+';'+segmentados_get+';'+linfocitos_get+';'+linfocitos_atipicos_get+';'+monocitos_get+';'+plaquetas_get+';'+vpm_get+';'+plaquetocrito_get+';'+pdw_get+';'+triglicerideos_get+';'+hdl_get+';'+ldl_get+';'+colesterol_get+';'+data_get
     return texto_exames
 
 def apagar_tudo(caixa_login,caixa_senha,fundo_tela1): #apaga os obejtos do primeiro evento
@@ -308,8 +314,8 @@ def formata_cpf(cpf):
         cont = cont + 1
     return num_comp
 
-def valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual):
-    informacoes = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+def valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual):
+    informacoes = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
     informacoes = informacoes.replace(';','')
     informacoes = informacoes.replace('/','')
     print(informacoes)
@@ -422,17 +428,55 @@ def validar_idade_sexo(idade,sexo):
     else:
         return False
         
-def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry):
-    texto_exames = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
+def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual,idade,sexo):
+    texto_exames = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
     lista = texto_exames.split(';')
 
     with open('relatorio_minha_saude.html','w', encoding='UTF-8') as arq:
-        niveis = ['Acima dos níveis indicados','Dentro dos níveis indicados','Abaixo dos níveis indicados']
+        niveis = ['Valor desejado','Intermediário','Elevado','Alto']
         saida = '<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>Minha Saúde</title></head><body><table>'
         cont = 0
         while cont < len(lista):
-            if cont==0:
-                saida += (f'<tr><td>Hemácias</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+            #TRIGLICERIDEOS
+            if cont==21:
+                if int(idade) <= 19:
+                    if int(lista[cont]) <= 130:
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                    elif int(lista[cont]) > 130:
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>{niveis[2]}</td><tr>')
+                    else:
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>Valor inválido</td><tr>')
+
+                elif int(idade) > 19:
+                    if int(lista[cont]) < 150:
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                    elif int(lista[cont]) >= 150 and int(lista[cont]) < 200:
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                    elif int(lista[cont]) >= 200:
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>{niveis[2]}</td><tr>')
+                    else:
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>Valor inválido</td><tr>')
+                        
+                        
+            #COLESTEROL HDL
+            if cont==22:
+                saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                
+            #COLESTEROL LDL                                         
+            if cont==23:
+                if int(lista[cont]) < 130:
+                    saida += (f'<tr><td>Colesterol LDL</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                elif int(lista[cont]) >= 130 and int(lista[cont]) < 160:
+                    saida += (f'<tr><td>Colesterol LDL</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                elif int(lista[cont]) >= 160:
+                    saida += (f'<tr><td>Colesterol LDL</td><td>{lista[cont]}</td><td>{niveis[3]}</td><tr>')
+                else:
+                    saida += (f'<tr><td>Colesterol LDL</td><td>{lista[cont]}</td><td>Valor inválido</td><tr>')
+                    
+            #COLESTEROL TOTAL
+            if cont==24:
+                saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                
             cont += 1
         
         saida += '</table></body></html>'

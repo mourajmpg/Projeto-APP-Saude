@@ -95,6 +95,8 @@ plaquetocrito_entry.setFill(gf.color_rgb(255,255,255))
 pdw_entry = gf.Entry(gf.Point(874,376),10)
 pdw_entry.setFill(gf.color_rgb(255,255,255))
 
+triglicerideos_entry = gf.Entry(gf.Point(874,417),10)
+triglicerideos_entry.setFill(gf.color_rgb(255,255,255))
 
 hdl_entry = gf.Entry(gf.Point(874,461),10)   
 hdl_entry.setFill(gf.color_rgb(255,255,255))
@@ -102,9 +104,13 @@ hdl_entry.setFill(gf.color_rgb(255,255,255))
 ldl_entry = gf.Entry(gf.Point(874,504),10)
 ldl_entry.setFill(gf.color_rgb(255,255,255))
 
+colesterol_entry = gf.Entry(gf.Point(874,547),10)
+colesterol_entry.setFill(gf.color_rgb(255,255,255))
 
-data_entry = gf.Entry(gf.Point(820,609),10)
+data_entry = gf.Entry(gf.Point(823,660),10)
 data_entry.setFill(gf.color_rgb(255,255,255))
+
+
 
 idade_entry = gf.Entry(gf.Point(535,386),38)
 idade_entry.setFill(gf.color_rgb(255,255,255))
@@ -185,7 +191,7 @@ while True:
     while prosseguir == eventos[1]:
         if informacoes_desenhadas == False:
             fundo_tela3.draw(janela)
-            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)                               #objetos e caixas de entrada são desenhados
+            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry)                               #objetos e caixas de entrada são desenhados
 
         informacoes_desenhadas = True #verifica se os objetos forma desenhados e evita o crash
         click = janela.getMouse()
@@ -193,7 +199,7 @@ while True:
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739):     #verifica as coordenadas e pega os dados dos Entrys
             data_atual = formata_data(data_entry)
-            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
             verificacao_data = valida_data(data_entry)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
@@ -202,7 +208,7 @@ while True:
                 aviso_usuario_incorreto.undraw()
 
             if verificacao_inteiro == True and verificacao_data == True:
-                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
                 with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
                     for linha in arquivo:
                         lista = linha.split(';')
@@ -234,7 +240,7 @@ while True:
                     aviso_existente = True
 
         if (click.getX() >= 106 and click.getX() <= 246) and (click.getY() >= 63 and click.getY() <= 118): #botão de voltar para página principal
-            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
+            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
 
             prosseguir = eventos[0]
             caixa_login = gf.Entry(gf.Point(551,315),37)
@@ -255,12 +261,12 @@ while True:
                         id_atual = lista[0]
                 arquivo.close()
 
-            saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemácias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematócrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucócitos </td> <td class="head"> Basófilos </td> <td class="head"> Eosinófilos </td> <td class="head"> Mielócitos </td> <td class="head"> Metamielócitos </td> <td class="head"> Bastões </td> <td class="head"> Segmentados </td> <td class="head"> Linfócitos </td> <td class="head"> Linfócitos atípicos </td> <td class="head"> Monócitos </td> <td class="head"> VPM </td> <td class="head"> Plaquetócrito </td> <td class="head"> PDW </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Data </td></tr>'
+            saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemácias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematócrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucócitos </td> <td class="head"> Basófilos </td> <td class="head"> Eosinófilos </td> <td class="head"> Mielócitos </td> <td class="head"> Metamielócitos </td> <td class="head"> Bastões </td> <td class="head"> Segmentados </td> <td class="head"> Linfócitos </td> <td class="head"> Linfócitos atípicos </td> <td class="head"> Monócitos </td> <td class="head"> Plaquetas </td><td class="head"> VPM </td> <td class="head"> Plaquetócrito </td> <td class="head"> PDW </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Data </td></tr>'
             with open('dados_exames.csv','r') as arquivo:
                 for linha in arquivo:
                     linha = linha[:-1].split(";")
                     if linha[0] == id_atual:
-                        saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[2]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td> <td> {linha[5]} </td> <td> {linha[6]} </td> <td> {linha[7]} </td> <td> {linha[8]} </td> <td> {linha[9]} </td> <td> {linha[10]} </td> <td> {linha[11]} </td> <td> {linha[12]} </td> <td> {linha[13]} </td> <td> {linha[14]} </td> <td> {linha[15]} </td> <td> {linha[16]} </td> <td> {linha[17]} </td> <td> {linha[18]} </td> <td> {linha[19]} </td> <td> {linha[20]} </td> <td> {linha[21]} </td> <td> {linha[22]} </td> <td> {linha[23]} </td> <td> {linha[24]} </td>')
+                        saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[2]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td> <td> {linha[5]} </td> <td> {linha[6]} </td> <td> {linha[7]} </td> <td> {linha[8]} </td> <td> {linha[9]} </td> <td> {linha[10]} </td> <td> {linha[11]} </td> <td> {linha[12]} </td> <td> {linha[13]} </td> <td> {linha[14]} </td> <td> {linha[15]} </td> <td> {linha[16]} </td> <td> {linha[17]} </td> <td> {linha[18]} </td> <td> {linha[19]} </td> <td> {linha[20]} </td> <td> {linha[21]} </td> <td> {linha[22]} </td> <td> {linha[23]} </td> <td> {linha[24]} </td> <td> {linha[25]} </td>')
                 arquivo.close()
             saida = saida + '</table></body></html>'
 
@@ -272,7 +278,7 @@ while True:
             
     verificador_anticrash = False
     while prosseguir == eventos[2]:    #seleção de pacientes do médico
-        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
+        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
         if verificador_anticrash == False:    #evita crash e permite o loop do programa
             fundo_tela4.draw(janela)
             paciente_desejado_entry.draw(janela)
@@ -299,12 +305,12 @@ while True:
         
         if (click.getX() >= 388 and click.getX() <= 714) and (click.getY() >= 485 and click.getY() <= 556):  #botão para gerar o relatório
             paciente_desejado = paciente_desejado_entry.getText()
-            saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table><caption> Exames de ' +str(paciente_desejado)+ '</caption> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemacias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematocrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucocitos </td> <td class="head"> Basofilos </td> <td class="head"> Eosinofilos </td> <td class="head"> Mielocitos </td> <td class="head"> Metamielocitos </td> <td class="head"> Bastoes </td> <td class="head"> Segmentados </td> <td class="head"> Linfocitos </td> <td class="head"> Linfocitos atipicos </td> <td class="head"> Monocitos </td> <td class="head"> VPM </td> <td class="head"> Plaquetocrito </td> <td class="head"> PDW </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Data </td></tr>'
+            saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table><caption> Exames de ' +str(paciente_desejado)+ '</caption> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemacias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematocrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucocitos </td> <td class="head"> Basofilos </td> <td class="head"> Eosinofilos </td> <td class="head"> Mielocitos </td> <td class="head"> Metamielocitos </td> <td class="head"> Bastoes </td> <td class="head"> Segmentados </td> <td class="head"> Linfocitos </td> <td class="head"> Linfocitos atipicos </td> <td class="head"> Monocitos </td> <td class="head"> Plaquetas </td> <td class="head"> VPM </td> <td class="head"> Plaquetocrito </td> <td class="head"> PDW </td> <td class="head"> Triglicerídeos </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Colesterol Total </td> <td class="head"> Data </td></tr>'
             with open('dados_exames.csv','r') as arquivo:
                 for linha in arquivo:
                     linha = linha[:-1].split(";")
                     if linha[0] == paciente_desejado:
-                        saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[2]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td> <td> {linha[5]} </td> <td> {linha[6]} </td> <td> {linha[7]} </td> <td> {linha[8]} </td> <td> {linha[9]} </td> <td> {linha[10]} </td> <td> {linha[11]} </td> <td> {linha[12]} </td> <td> {linha[13]} </td> <td> {linha[14]} </td> <td> {linha[15]} </td> <td> {linha[16]} </td> <td> {linha[17]} </td> <td> {linha[18]} </td> <td> {linha[19]} </td> <td> {linha[20]} </td> <td> {linha[21]} </td> <td> {linha[22]} </td> <td> {linha[23]} </td> <td> {linha[24]} </td>')
+                        saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[2]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td> <td> {linha[5]} </td> <td> {linha[6]} </td> <td> {linha[7]} </td> <td> {linha[8]} </td> <td> {linha[9]} </td> <td> {linha[10]} </td> <td> {linha[11]} </td> <td> {linha[12]} </td> <td> {linha[13]} </td> <td> {linha[14]} </td> <td> {linha[15]} </td> <td> {linha[16]} </td> <td> {linha[17]} </td> <td> {linha[18]} </td> <td> {linha[19]} </td> <td> {linha[20]} </td> <td> {linha[21]} </td> <td> {linha[22]} </td> <td> {linha[23]} </td> <td> {linha[24]} </td> <td> {linha[25]} </td>')
                 arquivo.close()
 
             saida = saida + '</table></body></html>'
@@ -439,7 +445,7 @@ while True:
 
     verificador_anticrash = False
     while prosseguir == eventos[4]:  # Usuário - edição e vizualização dos exames
-        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
+        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
         if verificador_anticrash == False:
             fundo_tela6.draw(janela)
         verificador_anticrash = True
@@ -461,12 +467,13 @@ while True:
                         id_atual = lista[0]
                 arquivo.close()
 
-            saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemácias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematócrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucócitos </td> <td class="head"> Basófilos </td> <td class="head"> Eosinófilos </td> <td class="head"> Mielócitos </td> <td class="head"> Metamielócitos </td> <td class="head"> Bastões </td> <td class="head"> Segmentados </td> <td class="head"> Linfócitos </td> <td class="head"> Linfócitos atípicos </td> <td class="head"> Monócitos </td> <td class="head"> VPM </td> <td class="head"> Plaquetócrito </td> <td class="head"> PDW </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Data </td></tr>'
+            saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemácias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematócrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucócitos </td> <td class="head"> Basófilos </td> <td class="head"> Eosinófilos </td> <td class="head"> Mielócitos </td> <td class="head"> Metamielócitos </td> <td class="head"> Bastões </td> <td class="head"> Segmentados </td> <td class="head"> Linfócitos </td> <td class="head"> Linfócitos atípicos </td> <td class="head"> Monócitos </td> <td class="head"> Plaquetas </td> <td class="head"> VPM </td> <td class="head"> Plaquetócrito </td> <td class="head"> PDW </td> <td class="head"> Triglicerídeos </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Colesterol Total </td> <td class="head"> Data </td></tr>'
             with open('dados_exames.csv','r') as arquivo:
                 for linha in arquivo:
                     linha = linha[:-1].split(";")
+                    print(len(linha))
                     if linha[0] == id_atual:
-                        saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[2]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td> <td> {linha[5]} </td> <td> {linha[6]} </td> <td> {linha[7]} </td> <td> {linha[8]} </td> <td> {linha[9]} </td> <td> {linha[10]} </td> <td> {linha[11]} </td> <td> {linha[12]} </td> <td> {linha[13]} </td> <td> {linha[14]} </td> <td> {linha[15]} </td> <td> {linha[16]} </td> <td> {linha[17]} </td> <td> {linha[18]} </td> <td> {linha[19]} </td> <td> {linha[20]} </td> <td> {linha[21]} </td> <td> {linha[22]} </td> <td> {linha[23]} </td> <td> {linha[24]} </td>')
+                        saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[2]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td> <td> {linha[5]} </td> <td> {linha[6]} </td> <td> {linha[7]} </td> <td> {linha[8]} </td> <td> {linha[9]} </td> <td> {linha[10]} </td> <td> {linha[11]} </td> <td> {linha[12]} </td> <td> {linha[13]} </td> <td> {linha[14]} </td> <td> {linha[15]} </td> <td> {linha[16]} </td> <td> {linha[17]} </td> <td> {linha[18]} </td> <td> {linha[19]} </td> <td> {linha[20]} </td> <td> {linha[21]} </td> <td> {linha[22]} </td> <td> {linha[23]} </td> <td> {linha[24]} </td> <td> {linha[25]} </td> <td> {linha[26]} </td> <td> {linha[27]} </td>')
                 arquivo.close()
             saida = saida + '</table></body></html>'
 
@@ -495,7 +502,7 @@ while True:
     while prosseguir == eventos[5]:  #Editar último exame
         if verificador_anticrash == False:
             fundo_tela7.draw(janela)
-            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry)
+            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry)
             verificador_anticrash = True
 
         click = janela.getMouse()
@@ -503,7 +510,7 @@ while True:
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739): #pega os dados novos dos Entrys
             data_atual = formata_data(data_entry)
-            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
             verificacao_data = valida_data(data_entry)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
@@ -512,7 +519,7 @@ while True:
                 aviso_usuario_incorreto.undraw()
 
             if verificacao_inteiro == True and verificacao_data == True:
-                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,data_atual)
 
                 with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
                     for linha in arquivo:
@@ -560,7 +567,7 @@ while True:
                     aviso_existente = True
         
         if (click.getX() >= 104 and click.getX() <= 246) and (click.getY() >= 64 and click.getY() <= 120): # botão de voltar
-            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_entry,fundo_tela3)
+            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
             fundo_tela7.undraw()
             prosseguir = eventos[4]
             
@@ -586,7 +593,7 @@ while True:
             sexo = lista[1]
             
             if validar_idade_sexo(idade,sexo) == True:
-                teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,hdl_entry,ldl_entry,data_atual)
+                teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual,idade,sexo)
                 os.system('relatorio_minha_saude.html')
                 
             else:
