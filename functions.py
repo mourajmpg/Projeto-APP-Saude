@@ -433,8 +433,8 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
     lista = texto_exames.split(';')
 
     with open('relatorio_minha_saude.html','w', encoding='UTF-8') as arq:
-        niveis = ['Valor desejado','Intermediário','Elevado','Alto']
-        saida = '<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>Minha Saúde</title></head><body><table>'
+        niveis = ['Valor desejado','Intermediário','Elevado','Alto','Baixo']
+        saida = '<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>Minha Saúde</title></head><body><table><caption>Análise do Hemograma</caption> '
         cont = 0
         while cont < len(lista):
             #TRIGLICERIDEOS
@@ -445,7 +445,7 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
                     elif int(lista[cont]) > 130:
                         saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>{niveis[2]}</td><tr>')
                     else:
-                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>Valor inválido</td><tr>')
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')
 
                 elif int(idade) > 19:
                     if int(lista[cont]) < 150:
@@ -455,12 +455,38 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
                     elif int(lista[cont]) >= 200:
                         saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>{niveis[2]}</td><tr>')
                     else:
-                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>Valor inválido</td><tr>')
+                        saida += (f'<tr><td>Triglicerídeos</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')
                         
                         
             #COLESTEROL HDL
             if cont==22:
-                saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                if int(idade) < 10:
+                    if int(lista[cont]) >= 40:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                    elif int(lista[cont]) < 40:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[4]}</td><tr>')
+                    else:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')                    
+                        
+                elif int(idade) >= 10 and int(idade) <= 19:
+                    if int(lista[cont]) >= 35:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                    elif int(lista[cont]) < 35:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[4]}</td><tr>')
+                    else:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')                        
+                        
+                elif int(idade) > 19:
+                    if int(lista[cont]) < 40:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[4]}</td><tr>')
+                    elif int(lista[cont]) >= 40 and int(idade) < 60:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                    elif int(lista[cont]) >= 60:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                    else:
+                        saida += (f'<tr><td>Colesterol HDL</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')
+                    
+                    
                 
             #COLESTEROL LDL                                         
             if cont==23:
@@ -471,16 +497,42 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
                 elif int(lista[cont]) >= 160:
                     saida += (f'<tr><td>Colesterol LDL</td><td>{lista[cont]}</td><td>{niveis[3]}</td><tr>')
                 else:
-                    saida += (f'<tr><td>Colesterol LDL</td><td>{lista[cont]}</td><td>Valor inválido</td><tr>')
+                    saida += (f'<tr><td>Colesterol LDL</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')
                     
             #COLESTEROL TOTAL
             if cont==24:
-                saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                if int(idade) < 19:
+                    if int(lista[cont]) < 170:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                    elif int(lista[cont]) >= 170 and int(lista[cont]) < 200:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                    elif int(lista[cont]) >= 200:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[3]}</td><tr>')
+                    else:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')                        
                 
+                elif int(idade) >= 19:
+                    if int(lista[cont]) < 200:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[0]}</td><tr>')
+                    elif int(lista[cont]) >= 200 and int(lista[cont]) < 250:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[1]}</td><tr>')
+                    elif int(lista[cont]) >= 250:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>{niveis[3]}</td><tr>')    
+                    else:
+                        saida += (f'<tr><td>Colesterol Total</td><td>{lista[cont]}</td><td>O valor informado é inválido</td><tr>')            
             cont += 1
         
-        saida += '</table></body></html>'
+        #CALCULADORA DE RITMO CARDIACO
+        if sexo == 'f' or sexo == 'F':
+            freq_max = 226 - int(idade)
+        elif sexo == 'm' or sexo == 'M':
+            freq_max = 220 - int(idade)
+        saida += (f'</table><br><br><table><caption>Frequência Cardíaca Máxima (FCMáx)</caption><tr><td class="head">Idade</td><td class="head">FCMáx</td></tr><tr><td>{idade} Anos</td><td>{freq_max} bpm</td></tr></table></body></html>')
         arq.write(saida)        
         arq.close()
+        
+    #calcu
+        
+        
                 
             

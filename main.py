@@ -156,7 +156,7 @@ while True:
                 prosseguir = eventos[1]
             else:
                 aviso_usuario_incorreto = gf.Text(gf.Point(550,465),"E-mail ou senha inválidos.")
-                aviso_usuario_incorreto.setTextColor(gf.color_rgb(207, 58, 58))
+                aviso_usuario_incorreto.setTextColor(gf.color_rgb(92, 158, 224))
                 aviso_usuario_incorreto.draw(janela)
                 aviso_incorreto = True
                 
@@ -181,7 +181,7 @@ while True:
                 prosseguir = eventos[2]
             else:
                 aviso_usuario_existente = gf.Text(gf.Point(550,465),"Email não cadastrado ou inválido")
-                aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                aviso_usuario_existente.setTextColor(gf.color_rgb(92, 158, 224))
                 aviso_usuario_existente.draw(janela)
                 aviso_existente = True
 
@@ -229,13 +229,13 @@ while True:
                 prosseguir = eventos[4]            #passa para o próximo evento
             else:
                 if verificacao_inteiro == True and verificacao_data == False:
-                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Por favor, insira um formato válido \n para a data, assim como está no exemplo.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente = gf.Text(gf.Point(825,740),"Por favor, insira um formato válido \n para a data, assim como está no exemplo.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(92, 158, 224))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
                 else:
-                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Insira apenas números \n nas informações do seu exame.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente = gf.Text(gf.Point(825,740),"Insira apenas números \n nas informações do seu exame.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(92, 158, 224))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
 
@@ -388,12 +388,12 @@ while True:
             else:
                 if verificacao_cadastro == True and verificacao_cpf == False:
                     aviso_usuario_existente = gf.Text(gf.Point(550,465),"CPF inválido.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(255,255,255))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
                 else:
                     aviso_usuario_existente = gf.Text(gf.Point(550,465),"Usuário existente ou inválido.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(255,255,255))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
 
@@ -415,12 +415,12 @@ while True:
             else:
                 if verificacao_cadastro_medico == True and verificacao_cpf == False:
                     aviso_usuario_existente = gf.Text(gf.Point(550,465),"CPF inválido.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(255,255,255))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
                 else:
                     aviso_usuario_existente = gf.Text(gf.Point(550,465),"Usuário existente ou inválido.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(255,255,255))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
 
@@ -549,20 +549,20 @@ while True:
                             break
         
                         else:
-                            aviso_data_incorreta = gf.Text(gf.Point(825,694),"Você não possui um exame com essa data.")
-                            aviso_data_incorreta.setTextColor(gf.color_rgb(207, 58, 58))
+                            aviso_data_incorreta = gf.Text(gf.Point(825,740),"Você não possui um exame com essa data.")
+                            aviso_data_incorreta.setTextColor(gf.color_rgb(92, 158, 224))
                             aviso_data_incorreta.draw(janela)
                     arquivo.close()
                 fundo_tela7.undraw()
             else:
                 if verificacao_inteiro == True and verificacao_data == False:
-                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Por favor, insira um formato válido \n para a data, assim como está no exemplo.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente = gf.Text(gf.Point(825,740),"Por favor, insira um formato válido \n para a data, assim como está no exemplo.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(92, 158, 224))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
                 else:
-                    aviso_usuario_existente = gf.Text(gf.Point(825,706),"Insira apenas números \n nas informações do seu exame.")
-                    aviso_usuario_existente.setTextColor(gf.color_rgb(207, 58, 58))
+                    aviso_usuario_existente = gf.Text(gf.Point(825,740),"Insira apenas números \n nas informações do seu exame.")
+                    aviso_usuario_existente.setTextColor(gf.color_rgb(92, 158, 224))
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
         
@@ -597,7 +597,7 @@ while True:
                 os.system('relatorio_minha_saude.html')
                 
             else:
-                aviso_data_incorreta = gf.Text(gf.Point(825,694),"Dados inválidos")
-                aviso_data_incorreta.setTextColor(gf.color_rgb(207, 58, 58))
+                aviso_data_incorreta = gf.Text(gf.Point(545,550),"Idade ou sexo inválido(a)")
+                aviso_data_incorreta.setTextColor(gf.color_rgb(0, 17, 93))
                 aviso_data_incorreta.draw(janela)
             
