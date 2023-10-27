@@ -316,16 +316,25 @@ def formata_cpf(cpf):
 
 def valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual):
     informacoes = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
+    lista_informacoes = informacoes.split(';')
     informacoes = informacoes.replace(';','')
     informacoes = informacoes.replace('/','')
-    print(informacoes)
     inteiros = ['1','2','3','4','5','6','7','8','9','0']
-    for iten in informacoes:
-        if iten not in inteiros:
-            verificacao_inteiro = False
-            break
-        else:
-            verificacao_inteiro = True
+
+    for num in lista_informacoes:
+        if num == '':
+            lista_informacoes.remove(num)
+    print(lista_informacoes)
+
+    if len(lista_informacoes) != 26:
+        verificacao_inteiro = False
+    else:
+        for iten in informacoes:
+            if iten not in inteiros:
+                verificacao_inteiro = False
+                break
+            else:
+                verificacao_inteiro = True
 
     return verificacao_inteiro
 
@@ -416,12 +425,18 @@ def idade_sexo_undraw(idade_entry,sexo_entry):
 def validar_idade_sexo(idade,sexo):
     idade_valida = False
     sexo_valido = False
+    numeros = ['1','2','3','4','5','6','7','8','9','0']
     
     if (idade != '') and (sexo != ''):
-        if (int(idade) > 0) and (int(idade)<120):
-            idade_valida = True
-        if (sexo=='f') or (sexo=='F') or (sexo=='m') or (sexo=='M'):
-            sexo_valido = True
+        for num in idade:
+            if num not in numeros:
+                idade_valida = False
+                break
+            else:
+                if (int(idade) > 0) and (int(idade)<120):
+                    idade_valida = True
+                if (sexo=='f') or (sexo=='F') or (sexo=='m') or (sexo=='M'):
+                    sexo_valido = True
     
     if (sexo_valido==True) and (idade_valida==True):
         return True
@@ -533,6 +548,3 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
         
     #calcu
         
-        
-                
-            
