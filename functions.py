@@ -18,7 +18,7 @@ def get_cpf(caixa_cpf):
 def fazer_login_medico(login,senha):
     dados_usuario_format = login + ';' + senha
     dados_usuario_format = dados_usuario_format.split(';')
-    with open("dados_login_medico.csv", "r") as arquivo:
+    with open("dados_login_medico.csv", "r",encoding='UTF-8') as arquivo:
       for linha in arquivo:
         linha = linha[0:-1].split(';')
 
@@ -33,7 +33,7 @@ def fazer_login_medico(login,senha):
 def fazer_login(login,senha): #verifica se as informações que o usuário digitou batem com o data base
     dados_usuario_format = login + ';' + senha
     dados_usuario_format = dados_usuario_format.split(';')
-    with open("dados_login.csv", "r") as arquivo:
+    with open("dados_login.csv", "r",encoding='UTF-8') as arquivo:
       for linha in arquivo:
         linha = linha[0:-1].split(';')
 
@@ -55,7 +55,7 @@ def fazer_cadastro(login,nome,cpf,senha): #faz o cadastro do usuário, gerando u
     #testa se o id já existe:
     id_valido = False
     while id_valido == False:
-        with open("dados_login.csv","r") as arquivo:
+        with open("dados_login.csv","r",encoding='UTF-8') as arquivo:
             id_gerado = gera_id()
             for linha in arquivo:
                 lista = linha[0:-1].split(';') #transforma a linha em uma lista removendo o '\n'
@@ -75,7 +75,7 @@ def fazer_cadastro(login,nome,cpf,senha): #faz o cadastro do usuário, gerando u
     if (login!='') and (senha!=''):
         valido = valida_email(login)
         if valido == True:
-            with open("dados_login.csv","r") as arquivo1:
+            with open("dados_login.csv","r",encoding='UTF-8') as arquivo1:
                 for linha in arquivo1:
                     split_linha = linha[0:-1].split(';')
 
@@ -87,7 +87,7 @@ def fazer_cadastro(login,nome,cpf,senha): #faz o cadastro do usuário, gerando u
                         verificacao_cpf = valida_cpf(cpf)
                 arquivo1.close()
                 if (verificacao_cadastro == True) and (verificacao_cpf == True):
-                    with open('dados_login.csv','a') as arquivo2:
+                    with open('dados_login.csv','a',encoding='UTF-8') as arquivo2:
                             arquivo2.write(dados_usuario)
                             arquivo2.close()
         else:
@@ -100,7 +100,7 @@ def fazer_cadastro_medico(login,nome,cpf,senha):
     #testa se o id já existe:
     id_valido = False
     while id_valido == False:
-        with open("dados_login_medico.csv","r") as arquivo:
+        with open("dados_login_medico.csv","r",encoding='UTF-8') as arquivo:
             id_gerado = gera_id()
             for linha in arquivo:
                 lista = linha[0:-1].split(';') #transforma a linha em uma lista removendo o '\n'
@@ -120,7 +120,7 @@ def fazer_cadastro_medico(login,nome,cpf,senha):
     if (login!='') and (senha!=''):
         valido = valida_email(login)
         if valido == True:
-            with open("dados_login_medico.csv","r") as arquivo1:
+            with open("dados_login_medico.csv","r",encoding='UTF-8') as arquivo1:
                 for linha in arquivo1:
                     split_linha = linha[0:-1].split(';')
 
@@ -132,7 +132,7 @@ def fazer_cadastro_medico(login,nome,cpf,senha):
                         verificacao_cpf = valida_cpf(cpf)
                 arquivo1.close()
                 if (verificacao_cadastro_medico == True) and (verificacao_cpf == True):
-                    with open('dados_login_medico.csv','a') as arquivo2:
+                    with open('dados_login_medico.csv','a',encoding='UTF-8') as arquivo2:
                             arquivo2.write(dados_usuario)
                             arquivo2.close()
         else:
