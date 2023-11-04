@@ -1,4 +1,5 @@
 import random as rd
+
 def get_login(caixa_login): #pega a informação de login
     login = caixa_login.getText()
     return login
@@ -14,6 +15,29 @@ def get_nome(caixa_nome):
 def get_cpf(caixa_cpf):
     cpf = caixa_cpf.getText()
     return cpf
+
+def get_id(login_atual):
+    with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
+        for linha in arquivo:
+            lista = linha.split(';')
+            if login_atual in lista:
+                id_atual = lista[0]
+        arquivo.close()
+        return id_atual
+
+def escreve_dados_exames(saida,login_atual):
+    id_atual = get_id(login_atual)
+
+    informacoes = ''
+    with open("dados_exames.csv","r") as arquivo:
+        for linha in arquivo:
+            informacoes = informacoes + linha
+        arquivo.close()
+    with open('dados_exames.csv','w',encoding='UTF-8') as arquivo:  #escreve no csv dos exames o id, login e a saida
+        texto = informacoes + id_atual + ';' + login_atual + ';' + saida + '\n'
+        #print(texto)
+        arquivo.write(texto)
+        arquivo.close()
 
 def fazer_login_medico(login,senha):
     dados_usuario_format = login + ';' + senha
@@ -547,4 +571,3 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
         arq.close()
         
     #calcu
-        

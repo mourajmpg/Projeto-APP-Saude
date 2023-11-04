@@ -13,7 +13,6 @@ fundo_tela8 = gf.Image(gf.Point(550,400),"Paciente_Minha_Saude.png")
 janela = gf.GraphWin("Analizador de hemograma",1100,800)
 fundo_tela1.draw(janela)
 
-
 caixa_login = gf.Entry(gf.Point(551,315),37)
 caixa_login.setFill(gf.color_rgb(255, 255, 255))
 caixa_login.setTextColor(gf.color_rgb(0, 0, 0))
@@ -24,7 +23,6 @@ caixa_senha = gf.Entry(gf.Point(551,415),37)
 caixa_senha.setFill(gf.color_rgb(255, 255, 255))
 caixa_senha.setTextColor(gf.color_rgb(0, 0, 0))
 caixa_senha.draw(janela)
-
 
 #eritograma
 hemacias_entry = gf.Entry(gf.Point(330,243),10)
@@ -108,7 +106,6 @@ data_entry = gf.Entry(gf.Point(823,660),10)
 data_entry.setFill(gf.color_rgb(255,255,255))
 
 
-
 idade_entry = gf.Entry(gf.Point(535,386),38)
 idade_entry.setFill(gf.color_rgb(255,255,255))
 
@@ -119,9 +116,6 @@ sexo_entry.setFill(gf.color_rgb(255,255,255))
 
 paciente_desejado_entry = gf.Entry(gf.Point(570,307),50)
 paciente_desejado_entry.setFill(gf.color_rgb(255,255,255))
-
-
-gf.update(10)
 
 eventos = ["1","2",'3','4','5','6','7'] #eventos para direcionar o programa
 
@@ -185,13 +179,12 @@ while True:
 
     informacoes_desenhadas = False    #introdução dos dados dos exames
     while prosseguir == eventos[1]:
-        if informacoes_desenhadas == False:
+        if informacoes_desenhadas == False: #verifica se os objetos forma desenhados e evita o crash
             fundo_tela3.draw(janela)
             exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry)                               #objetos e caixas de entrada são desenhados
 
-        informacoes_desenhadas = True #verifica se os objetos forma desenhados e evita o crash
+        informacoes_desenhadas = True 
         click = janela.getMouse()
-        print(click)
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739):     #verifica as coordenadas e pega os dados dos Entrys
             data_atual = formata_data(data_entry)
@@ -205,23 +198,8 @@ while True:
 
             if verificacao_inteiro == True and verificacao_data == True:
                 saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
-                with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
-                    for linha in arquivo:
-                        lista = linha.split(';')
-                        if login_atual in lista:
-                            id_atual = lista[0]
-                    arquivo.close()
-    
-                informacoes = ''
-                with open("dados_exames.csv","r") as arquivo:
-                    for linha in arquivo:
-                        informacoes = informacoes + linha
-                    arquivo.close()
-                with open('dados_exames.csv','w',encoding='UTF-8') as arquivo:  #escreve no csv dos exames o id, login e a saida
-                    texto = informacoes + id_atual + ';' + login_atual + ';' + saida + '\n'
-                    #print(texto)
-                    arquivo.write(texto)
-                    arquivo.close()
+                escreve_dados_exames(saida,login_atual)  #função para escrever os dados no arquivo csv
+
                 prosseguir = eventos[4]            #passa para o próximo evento
             else:
                 if verificacao_inteiro == True and verificacao_data == False:
@@ -281,9 +259,8 @@ while True:
 
         verificador_anticrash = True
         click = janela.getMouse()
-        print(click)
 
-        if (click.getX() >= 388 and click.getX() <= 713) and (click.getY() >= 587 and click.getY() <= 661):
+        if (click.getX() >= 388 and click.getX() <= 713) and (click.getY() >= 587 and click.getY() <= 661): #botao para gerar planilha com os pacientes cadastrados
             saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table><caption> Pacientes cadastrados </caption> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Nome </td> <td class="head"> CPF </td><tr>'
             with open('dados_login.csv','r') as arquivo:
                 for linha in arquivo:
@@ -367,7 +344,6 @@ while True:
         nome = get_nome(caixa_nome)
         cpf = get_cpf(caixa_cpf)
 
-
         if (click.getX() >= 452 and click.getX() <= 648) and (click.getY() >= 586 and click.getY() <= 624):  #cadastro como paciente
             #verifica se o cadastro pode ser efetuado
             verificacao_cadastro = fazer_cadastro(login,nome,cpf,senha)
@@ -421,7 +397,6 @@ while True:
                     aviso_usuario_existente.draw(janela)
                     aviso_existente = True
 
-
         if (click.getX() >= 179 and click.getX() <= 334) and (click.getY() >= 43 and click.getY() <= 102): #botão de voltar para página principal
             apagar_tudo_cadastro(caixa_login,caixa_senha,fundo_tela1,caixa_nome,caixa_cpf,fundo_tela5)
             caixa_login = gf.Entry(gf.Point(551,315),37)
@@ -448,7 +423,6 @@ while True:
         verificador_anticrash = True
 
         click = janela.getMouse()
-        print(click)
 
         #Botão (voltar)
         if (click.getX() >= 101 and click.getX() <= 260) and (click.getY() >= 58 and click.getY() <= 119): 
@@ -457,12 +431,7 @@ while True:
 
         #Botão (ver meus exames) 
         if (click.getX() >= 352 and click.getX() <= 729) and (click.getY() >= 338 and click.getY() <= 412): 
-            with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
-                for linha in arquivo:
-                    lista = linha.split(';')
-                    if login_atual in lista:
-                        id_atual = lista[0]
-                arquivo.close()
+            id_atual = get_id(login_atual)
 
             saida = '<html lang = "pt-br"><head><meta charset = "UTF-8"><title> Formulario </title><link rel="stylesheet" type="text/css" href="style.css"/></head><body><table> <tr><td class="head"> ID </td> <td class="head"> Email </td> <td class="head"> Hemácias </td> <td class="head"> Hemoglobina </td> <td class="head"> Hematócrito </td> <td class="head"> VCM </td> <td class="head"> HCM </td> <td class="head"> CHCM </td> <td class="head"> RDW </td> <td class="head"> Leucócitos </td> <td class="head"> Basófilos </td> <td class="head"> Eosinófilos </td> <td class="head"> Mielócitos </td> <td class="head"> Metamielócitos </td> <td class="head"> Bastões </td> <td class="head"> Segmentados </td> <td class="head"> Linfócitos </td> <td class="head"> Linfócitos atípicos </td> <td class="head"> Monócitos </td> <td class="head"> Plaquetas </td> <td class="head"> VPM </td> <td class="head"> Plaquetócrito </td> <td class="head"> PDW </td> <td class="head"> Triglicerídeos </td> <td class="head"> HDL </td> <td class="head"> LDL </td> <td class="head"> Colesterol Total </td> <td class="head"> Data </td></tr>'
             with open('dados_exames.csv','r') as arquivo:
@@ -503,7 +472,6 @@ while True:
             verificador_anticrash = True
 
         click = janela.getMouse()
-        print(click)
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739): #pega os dados novos dos Entrys
             data_atual = formata_data(data_entry)
@@ -517,13 +485,7 @@ while True:
 
             if verificacao_inteiro == True and verificacao_data == True:
                 saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
-
-                with open('dados_login.csv','r') as arquivo:  #pega o id do usuário atual
-                    for linha in arquivo:
-                        lista = linha.split(';')
-                        if login_atual in lista:
-                            id_atual = lista[0]
-                    arquivo.close()
+                id_atual = get_id(login_atual)
                 
                 with open('dados_exames.csv','r',encoding='UTF-8') as arquivo:
                     lista_dados_exames = arquivo.readlines()  #separa o arquivo em uma grande lista
@@ -577,7 +539,6 @@ while True:
             verificador_anticrash = True
             idade_sexo_draw(janela,idade_entry,sexo_entry)
         click = janela.getMouse()
-        #print(click)
         
         if (click.getX() >= 104 and click.getX() <= 246) and (click.getY() >= 64 and click.getY() <= 120): # botão de voltar
             idade_sexo_undraw(idade_entry,sexo_entry)
