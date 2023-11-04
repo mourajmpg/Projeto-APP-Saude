@@ -116,7 +116,6 @@ idade_entry.setFill(gf.color_rgb(255,255,255))
 sexo_entry = gf.Entry(gf.Point(535,505),38)
 sexo_entry.setFill(gf.color_rgb(255,255,255))
 
-
 #textos
 
 paciente_desejado_entry = gf.Entry(gf.Point(570,307),50)
