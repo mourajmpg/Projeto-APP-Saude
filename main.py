@@ -3,11 +3,10 @@ import os
 from functions import *
 
 fundo_tela1 = gf.Image(gf.Point(550,400),"Login.png")
-fundo_tela2 = gf.Image(gf.Point(550,400),"Cadastro.png")
-fundo_tela3 = gf.Image(gf.Point(550,400),"Paciente_Editar_Exame.png")
 fundo_tela4 = gf.Image(gf.Point(550,400),"Medico_Pesquisar.png")
 fundo_tela5 = gf.Image(gf.Point(550,400),"Cadastro.png")
 fundo_tela6 = gf.Image(gf.Point(550,400),"Paciente_Editar.png")
+fundo_tela3 = gf.Image(gf.Point(550,400),"Paciente_Enviar_Exame.png")
 fundo_tela7 = gf.Image(gf.Point(550,400),"Paciente_Editar_Exame.png")
 fundo_tela8 = gf.Image(gf.Point(550,400),"Paciente_Minha_Saude.png")
 
@@ -289,6 +288,7 @@ while True:
             with open('dados_login.csv','r') as arquivo:
                 for linha in arquivo:
                     linha = linha[:-1].split(";")
+                    print(linha)
                     saida += (f'<tr><td> {linha[0]} </td><td> {linha[1]} </td> <td> {linha[3]} </td> <td> {linha[4]} </td>')
                 arquivo.close()
 
