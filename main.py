@@ -1,6 +1,4 @@
 import graphics as gf
-import random as rd
-from datetime import datetime
 import os
 from functions import *
 
