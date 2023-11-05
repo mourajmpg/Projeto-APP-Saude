@@ -2,13 +2,13 @@ import graphics as gf
 import os
 from functions import *
 
-fundo_tela1 = gf.Image(gf.Point(550,400),"Login.png")
-fundo_tela4 = gf.Image(gf.Point(550,400),"Medico_Pesquisar.png")
-fundo_tela5 = gf.Image(gf.Point(550,400),"Cadastro.png")
-fundo_tela6 = gf.Image(gf.Point(550,400),"Paciente_Editar.png")
-fundo_tela3 = gf.Image(gf.Point(550,400),"Paciente_Enviar_Exame.png")
-fundo_tela7 = gf.Image(gf.Point(550,400),"Paciente_Editar_Exame.png")
-fundo_tela8 = gf.Image(gf.Point(550,400),"Paciente_Minha_Saude.png")
+fundo_tela1 = gf.Image(gf.Point(550,400),"images/Login.png")
+fundo_tela4 = gf.Image(gf.Point(550,400),"images/Medico_Pesquisar.png")
+fundo_tela5 = gf.Image(gf.Point(550,400),"images/Cadastro.png")
+fundo_tela6 = gf.Image(gf.Point(550,400),"images/Paciente_Editar.png")
+fundo_tela3 = gf.Image(gf.Point(550,400),"images/Paciente_Enviar_Exame.png")
+fundo_tela7 = gf.Image(gf.Point(550,400),"images/Paciente_Editar_Exame.png")
+fundo_tela8 = gf.Image(gf.Point(550,400),"images/Paciente_Minha_Saude.png")
 
 janela = gf.GraphWin("Analizador de hemograma",1100,800)
 fundo_tela1.draw(janela)
