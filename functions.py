@@ -165,92 +165,23 @@ def fazer_cadastro_medico(login,nome,cpf,senha):
         verificacao_cadastro_medico = False
     return verificacao_cadastro_medico
 
-def exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry): #desenha os obejtos da aba de exames
-    hemacias_entry.draw(janela)
-    hemoglobina_entry.draw(janela)
-    hematocrito_entry.draw(janela)
-    vcm_entry.draw(janela)
-    hcm_entry.draw(janela)
-    chcm_entry.draw(janela)
-    rdw_entry.draw(janela)
-    leucocitos_entry.draw(janela)
-    basofilos_entry.draw(janela)
-    eosinofilos_entry.draw(janela)
-    mielocitos_entry.draw(janela)
-    metamielocitos_entry.draw(janela)
-    bastoes_entry.draw(janela)
-    segmentados_entry.draw(janela)
-    linfocitos_entry.draw(janela)
-    linfocitos_atipicos_entry.draw(janela)
-    monocitos_entry.draw(janela)
-    plaquetas_entry.draw(janela)
-    vpm_entry.draw(janela)
-    plaquetocrito_entry.draw(janela)
-    pdw_entry.draw(janela)
-    triglicerideos_entry.draw(janela)
-    hdl_entry.draw(janela)
-    ldl_entry.draw(janela)
-    colesterol_entry.draw(janela)
-    data_entry.draw(janela)
+def exames_draw(lista_entrys): #desenha os obejtos da aba de exames
+    for var in lista_entrys[1:]:
+        var.draw(lista_entrys[0])
     
-def exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3): #apaga os objetos e o background da aba de exames
-    hemacias_entry.undraw()
-    hemoglobina_entry.undraw()
-    hematocrito_entry.undraw()
-    vcm_entry.undraw()
-    hcm_entry.undraw()
-    chcm_entry.undraw()
-    rdw_entry.undraw()
-    leucocitos_entry.undraw()
-    basofilos_entry.undraw()
-    eosinofilos_entry.undraw()
-    mielocitos_entry.undraw()
-    metamielocitos_entry.undraw()
-    bastoes_entry.undraw()
-    segmentados_entry.undraw()
-    linfocitos_entry.undraw()
-    linfocitos_atipicos_entry.undraw()
-    monocitos_entry.undraw()
-    plaquetas_entry.undraw()
-    vpm_entry.undraw()
-    plaquetocrito_entry.undraw()
-    pdw_entry.undraw()
-    triglicerideos_entry.undraw()
-    hdl_entry.undraw()
-    ldl_entry.undraw()
-    colesterol_entry.undraw()
-    data_entry.undraw()
-    fundo_tela3.undraw()
+def exames_undraw(lista_entrys): #apaga os objetos e o background da aba de exames
+    for var in lista_entrys[1:]:
+        var.undraw()
 
-def get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual): #pega os dados dos exames digitados
-    hemacias_get = hemacias_entry.getText()
-    hemoglobina_get = hemoglobina_entry.getText()
-    hematocrito_get = hematocrito_entry.getText()
-    vcm_get = vcm_entry.getText()
-    hcm_get = hcm_entry.getText()
-    chcm_get = chcm_entry.getText()
-    rdw_get = rdw_entry.getText()
-    leucocitos_get = leucocitos_entry.getText()
-    basofilos_get = basofilos_entry.getText()
-    eosinofilos_get = eosinofilos_entry.getText()
-    mielocitos_get = mielocitos_entry.getText()
-    metamielocitos_get = metamielocitos_entry.getText()
-    bastoes_get = bastoes_entry.getText()
-    segmentados_get = segmentados_entry.getText()
-    linfocitos_get = linfocitos_entry.getText()
-    linfocitos_atipicos_get = linfocitos_atipicos_entry.getText()
-    monocitos_get = monocitos_entry.getText()
-    plaquetas_get = plaquetas_entry.getText()
-    vpm_get = vpm_entry.getText()
-    plaquetocrito_get = plaquetocrito_entry.getText()
-    pdw_get = pdw_entry.getText()
-    triglicerideos_get = triglicerideos_entry.getText()
-    ldl_get = ldl_entry.getText()
-    hdl_get = hdl_entry.getText()
-    colesterol_get = colesterol_entry.getText()
-    data_get = data_atual
+def get_exames(lista_entrys,data_atual): #pega os dados dos exames digitados
+    texto_exames = lista_entrys[1].getText()
+    for info in lista_entrys[2:26]:
+        texto_exames = texto_exames + ';' + info.getText()
+    texto_exames = texto_exames + ';' + data_atual
 
-    texto_exames = hemacias_get+';'+hemoglobina_get+';'+hematocrito_get+';'+vcm_get+';'+hcm_get+';'+chcm_get+';'+rdw_get+';'+leucocitos_get+';'+basofilos_get+';'+eosinofilos_get+';'+mielocitos_get+';'+metamielocitos_get+';'+bastoes_get+';'+segmentados_get+';'+linfocitos_get+';'+linfocitos_atipicos_get+';'+monocitos_get+';'+plaquetas_get+';'+vpm_get+';'+plaquetocrito_get+';'+pdw_get+';'+triglicerideos_get+';'+hdl_get+';'+ldl_get+';'+colesterol_get+';'+data_get
+    print(texto_exames)
+
+    #texto_exames = hemacias_get+';'+hemoglobina_get+';'+hematocrito_get+';'+vcm_get+';'+hcm_get+';'+chcm_get+';'+rdw_get+';'+leucocitos_get+';'+basofilos_get+';'+eosinofilos_get+';'+mielocitos_get+';'+metamielocitos_get+';'+bastoes_get+';'+segmentados_get+';'+linfocitos_get+';'+linfocitos_atipicos_get+';'+monocitos_get+';'+plaquetas_get+';'+vpm_get+';'+plaquetocrito_get+';'+pdw_get+';'+triglicerideos_get+';'+hdl_get+';'+ldl_get+';'+colesterol_get+';'+data_get
     return texto_exames
 
 def apagar_tudo(caixa_login,caixa_senha,fundo_tela1): #apaga os obejtos do primeiro evento
@@ -338,8 +269,8 @@ def formata_cpf(cpf):
         cont = cont + 1
     return num_comp
 
-def valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual):
-    informacoes = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
+def valida_inteiro(lista_entrys,data_atual):
+    informacoes = get_exames(lista_entrys,data_atual)
     lista_informacoes = informacoes.split(';')
     informacoes = informacoes.replace(';','')
     informacoes = informacoes.replace('/','')
@@ -467,8 +398,8 @@ def validar_idade_sexo(idade,sexo):
     else:
         return False
         
-def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual,idade,sexo):
-    texto_exames = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
+def teste_de_saude(lista_entrys,idade,sexo,data_atual):
+    texto_exames = get_exames(lista_entrys,data_atual)
     lista = texto_exames.split(';')
 
     with open('relatorio_minha_saude.html','w', encoding='UTF-8') as arq:
@@ -569,5 +500,3 @@ def teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,
         saida += (f'</table><br><br><table><caption>Frequência Cardíaca Máxima (FCMáx)</caption><tr><td class="head">Idade</td><td class="head">FCMáx</td></tr><tr><td>{idade} Anos</td><td>{freq_max} bpm</td></tr></table></body></html>')
         arq.write(saida)        
         arq.close()
-        
-    #calcu

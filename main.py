@@ -2,6 +2,7 @@ import graphics as gf
 import os
 from functions import *
 
+
 fundo_tela1 = gf.Image(gf.Point(550,400),"images/Login.png")
 fundo_tela4 = gf.Image(gf.Point(550,400),"images/Medico_Pesquisar.png")
 fundo_tela5 = gf.Image(gf.Point(550,400),"images/Cadastro.png")
@@ -9,6 +10,7 @@ fundo_tela6 = gf.Image(gf.Point(550,400),"images/Paciente_Editar.png")
 fundo_tela3 = gf.Image(gf.Point(550,400),"images/Paciente_Enviar_Exame.png")
 fundo_tela7 = gf.Image(gf.Point(550,400),"images/Paciente_Editar_Exame.png")
 fundo_tela8 = gf.Image(gf.Point(550,400),"images/Paciente_Minha_Saude.png")
+
 
 janela = gf.GraphWin("Analizador de hemograma",1100,800)
 fundo_tela1.draw(janela)
@@ -122,6 +124,8 @@ eventos = ["1","2",'3','4','5','6','7'] #eventos para direcionar o programa
 aviso_incorreto = False
 aviso_existente = False
 
+lista_entrys = [janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry]
+
 prosseguir = eventos[0]     #Tela inicial
 while True:
     if prosseguir == eventos[0]:
@@ -181,14 +185,14 @@ while True:
     while prosseguir == eventos[1]:
         if informacoes_desenhadas == False: #verifica se os objetos forma desenhados e evita o crash
             fundo_tela3.draw(janela)
-            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry)                               #objetos e caixas de entrada são desenhados
+            exames_draw(lista_entrys)                               #objetos e caixas de entrada são desenhados
 
         informacoes_desenhadas = True 
         click = janela.getMouse()
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739):     #verifica as coordenadas e pega os dados dos Entrys
             data_atual = formata_data(data_entry)
-            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
+            verificacao_inteiro = valida_inteiro(lista_entrys,data_atual)
             verificacao_data = valida_data(data_entry)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
@@ -197,10 +201,11 @@ while True:
                 aviso_usuario_incorreto.undraw()
 
             if verificacao_inteiro == True and verificacao_data == True:
-                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
+                saida = get_exames(lista_entrys,data_atual)
                 escreve_dados_exames(saida,login_atual)  #função para escrever os dados no arquivo csv
 
                 prosseguir = eventos[4]            #passa para o próximo evento
+                fundo_tela3.undraw()
             else:
                 if verificacao_inteiro == True and verificacao_data == False:
                     aviso_usuario_existente = gf.Text(gf.Point(825,740),"Por favor, insira um formato válido \n para a data, assim como está no exemplo.")
@@ -214,7 +219,8 @@ while True:
                     aviso_existente = True
 
         if (click.getX() >= 106 and click.getX() <= 246) and (click.getY() >= 63 and click.getY() <= 118): #botão de voltar para página principal
-            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
+            exames_undraw(lista_entrys)
+            fundo_tela3.undraw()
 
             prosseguir = eventos[0]
             caixa_login = gf.Entry(gf.Point(551,315),37)
@@ -252,7 +258,8 @@ while True:
             
     verificador_anticrash = False
     while prosseguir == eventos[2]:    #seleção de pacientes do médico
-        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
+        exames_undraw(lista_entrys)
+        fundo_tela3.undraw()
         if verificador_anticrash == False:    #evita crash e permite o loop do programa
             fundo_tela4.draw(janela)
             paciente_desejado_entry.draw(janela)
@@ -417,7 +424,7 @@ while True:
 
     verificador_anticrash = False
     while prosseguir == eventos[4]:  # Usuário - edição e vizualização dos exames
-        exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
+        exames_undraw(lista_entrys)
         if verificador_anticrash == False:
             fundo_tela6.draw(janela)
         verificador_anticrash = True
@@ -468,14 +475,14 @@ while True:
     while prosseguir == eventos[5]:  #Editar último exame
         if verificador_anticrash == False:
             fundo_tela7.draw(janela)
-            exames_draw(janela,hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry)
+            exames_draw(lista_entrys)
             verificador_anticrash = True
 
         click = janela.getMouse()
 
         if (click.getX() >= 434 and click.getX() <= 667) and (click.getY() >= 665  and click.getY() <= 739): #pega os dados novos dos Entrys
             data_atual = formata_data(data_entry)
-            verificacao_inteiro = valida_inteiro(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
+            verificacao_inteiro = valida_inteiro(lista_entrys, data_atual)
             verificacao_data = valida_data(data_entry)
             #Verifica e remove se ja existe um aviso na tela, evitando crash
             if aviso_existente == True:
@@ -484,7 +491,7 @@ while True:
                 aviso_usuario_incorreto.undraw()
 
             if verificacao_inteiro == True and verificacao_data == True:
-                saida = get_exames(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual)
+                saida = get_exames(lista_entrys, data_atual)
                 id_atual = get_id(login_atual)
                 
                 with open('dados_exames.csv','r',encoding='UTF-8') as arquivo:
@@ -526,7 +533,8 @@ while True:
                     aviso_existente = True
         
         if (click.getX() >= 104 and click.getX() <= 246) and (click.getY() >= 64 and click.getY() <= 120): # botão de voltar
-            exames_undraw(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_entry,fundo_tela3)
+            exames_undraw(lista_entrys)
+            fundo_tela3.undraw()
             fundo_tela7.undraw()
             prosseguir = eventos[4]
             
@@ -551,7 +559,7 @@ while True:
             sexo = lista[1]
             
             if validar_idade_sexo(idade,sexo) == True:
-                teste_de_saude(hemacias_entry,hemoglobina_entry,hematocrito_entry,vcm_entry,hcm_entry,chcm_entry,rdw_entry,leucocitos_entry,basofilos_entry,eosinofilos_entry,mielocitos_entry,metamielocitos_entry,bastoes_entry,segmentados_entry,linfocitos_entry,linfocitos_atipicos_entry,monocitos_entry,plaquetas_entry,vpm_entry,plaquetocrito_entry,pdw_entry,triglicerideos_entry,hdl_entry,ldl_entry,colesterol_entry,data_atual,idade,sexo)
+                teste_de_saude(lista_entrys,idade,sexo,data_atual)
                 os.system('relatorio_minha_saude.html')
                 
             else:
